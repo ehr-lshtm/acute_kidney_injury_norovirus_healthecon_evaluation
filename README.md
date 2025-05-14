@@ -1,5 +1,3 @@
-# EHR group template for R Projects
-
 ## Purpose
 This is the analysis code for the paper 'cost-effectiveness of potential norovirus vaccination in England: a dynamic model-based health economic evaluation including acute kidney injury outcomes'
 

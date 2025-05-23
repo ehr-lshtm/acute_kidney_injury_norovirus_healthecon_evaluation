@@ -13,7 +13,7 @@ for (i in seq_along(aki_values)) {
 
   # Run the model
   current_result <- cea_one_way_analysis_function(
-    data = mean_averted_combo_vaccination,
+    data = psa_mean_averted_combo_vaccination,
     aki_hosp_parameter_4 = aki_values[i]
   )
   
@@ -44,7 +44,7 @@ for (i in seq_along(aki_values)) {
   
   # Run the model
   current_result <- cea_one_way_analysis_function(
-    data = mean_averted_under5_vaccination,
+    data = psa_mean_averted_under5_vaccination,
     aki_hosp_parameter_4 = aki_values[i]
     )
   
@@ -75,7 +75,7 @@ for (i in seq_along(aki_values)) {
   
   # Run the model
   current_result <- cea_one_way_analysis_function(
-    data = mean_averted_over65_vaccination,
+    data = psa_mean_averted_over65_vaccination,
     aki_hosp_parameter_4 = aki_values[i]
     )
   
@@ -182,7 +182,7 @@ for (i in seq_along(vaccine_cost_values)) {
   # Run the model
   current_result <- cea_one_way_analysis_function(
     cost_per_dose = cost_per_dose,
-    data = mean_averted_combo_vaccination,
+    data = psa_mean_averted_combo_vaccination,
   )
   
   # Create a row with just the aki_value and the result
@@ -209,7 +209,7 @@ for (i in seq_along(vaccine_cost_values)) {
   # Run the model
   current_result <- cea_one_way_analysis_function(
     cost_per_dose = vaccine_cost_values[i],
-    data = mean_averted_under5_vaccination
+    data = psa_mean_averted_under5_vaccination
   )
   
   # Create a row with just the aki_value and the result
@@ -236,7 +236,7 @@ for (i in seq_along(vaccine_cost_values)) {
     # Run the model
   current_result <- cea_one_way_analysis_function(
     cost_per_dose = vaccine_cost_values[i],
-    data = mean_averted_over65_vaccination
+    data = psa_mean_averted_over65_vaccination
     )
   
   # Create a row with just the aki_value and the result
@@ -286,8 +286,8 @@ vaccine_threshold_analysis_plot <- function (data) {
     ) +
     scale_y_continuous(
       labels = scales::comma_format(),
-      breaks = seq(-20000, 50000, by = 10000),
-      limits = c(-20000, 50000)
+      breaks = seq(-20000, 60000, by = 10000),
+      limits = c(-20000, 60000)
     )
 }
 
@@ -321,7 +321,7 @@ for (i in seq_along(aki_values)) {
   
   # Run the model
   current_result <- cea_one_way_analysis_function(
-    data = mean_averted_combo_vaccination,
+    data = psa_mean_averted_combo_vaccination,
     icer_only = FALSE,
     aki_hosp_parameter_4 = aki_values[i]
   )
@@ -352,7 +352,7 @@ for (i in seq_along(aki_values)) {
   
   # Run the model
   current_result <- cea_one_way_analysis_function(
-    data = mean_averted_under5_vaccination,
+    data = psa_mean_averted_under5_vaccination,
     icer_only = FALSE,
     aki_hosp_parameter_4 = aki_values[i]
   )

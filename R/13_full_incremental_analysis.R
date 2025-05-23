@@ -38,6 +38,12 @@ no_aki_cea_under5_over65 <- as.data.frame(no_aki_cea_under5_over65$summary_stats
 no_aki_part_1 <- no_aki_cea_under5 %>% 
   left_join(no_aki_cea_over65, by = "metric") %>% 
   left_join(no_aki_cea_under5_over65, by = "metric") %>%
+  filter(metric != "ICER") |> 
+  pivot_longer(cols = -metric, names_to = "stat", values_to = "value") |> 
+  pivot_wider(names_from = metric, values_from = value) |> 
+  mutate(ICER = `Incremental Cost` / `QALY Gain`) |> 
+  pivot_longer(cols = -stat, names_to = "metric", values_to = "value") |> 
+  pivot_wider(names_from = stat, values_from = value) |> 
   mutate(
     mean_BvA = mean_B - mean_A,
     mean_CvB = mean_C - mean_B,
@@ -73,6 +79,12 @@ no_aki_part_1 <- no_aki_cea_under5 %>%
 no_aki_part_2 <- no_aki_cea_under5 %>% 
   left_join(no_aki_cea_over65, by = "metric") %>% 
   left_join(no_aki_cea_under5_over65, by = "metric") %>%
+  filter(metric != "ICER") |> 
+  pivot_longer(cols = -metric, names_to = "stat", values_to = "value") |> 
+  pivot_wider(names_from = metric, values_from = value) |> 
+  mutate(ICER = `Incremental Cost` / `QALY Gain`) |> 
+  pivot_longer(cols = -stat, names_to = "metric", values_to = "value") |> 
+  pivot_wider(names_from = stat, values_from = value) |> 
   mutate(across(where(is.numeric), ~if_else(metric == "Total cost", 
                                             ./1000000, 
                                             .))) %>% 
@@ -136,9 +148,15 @@ cea_under5_over65 <- as.data.frame(cea_under5_over65$summary_stats) %>%
          lower_ci_C = lower_ci,
          upper_ci_C = upper_ci)
 
-with_aki_part_1 <- cea_under5 %>% 
-  left_join(cea_over65, by = "metric") %>% 
-  left_join(cea_under5_over65, by = "metric") %>%
+with_aki_part_1 <- cea_under5 |>  
+  left_join(cea_over65, by = "metric") |>  
+  left_join(cea_under5_over65, by = "metric") |> 
+  filter(metric != "ICER") |> 
+  pivot_longer(cols = -metric, names_to = "stat", values_to = "value") |> 
+  pivot_wider(names_from = metric, values_from = value) |> 
+  mutate(ICER = `Incremental Cost` / `QALY Gain`) |> 
+  pivot_longer(cols = -stat, names_to = "metric", values_to = "value") |> 
+  pivot_wider(names_from = stat, values_from = value) |> 
   mutate(
     mean_BvA = mean_B - mean_A,
     mean_CvB = mean_C - mean_B,
@@ -174,6 +192,12 @@ with_aki_part_1 <- cea_under5 %>%
 with_aki_part_2 <- cea_under5 %>% 
   left_join(cea_over65, by = "metric") %>% 
   left_join(cea_under5_over65, by = "metric") %>%
+  filter(metric != "ICER") |> 
+  pivot_longer(cols = -metric, names_to = "stat", values_to = "value") |> 
+  pivot_wider(names_from = metric, values_from = value) |> 
+  mutate(ICER = `Incremental Cost` / `QALY Gain`) |> 
+  pivot_longer(cols = -stat, names_to = "metric", values_to = "value") |> 
+  pivot_wider(names_from = stat, values_from = value) |> 
   mutate(across(where(is.numeric), ~if_else(metric == "Total cost", 
                                             ./1000000, 
                                             .))) %>% 

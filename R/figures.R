@@ -24,7 +24,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 #+ figures
 
-n_iter = 100
+n_iter = 2000
 set.seed(1234)
 
 save_plot <- function(plot, filename) {
@@ -544,7 +544,7 @@ combined_full_incremental_table
 save_flextable_as_png(combined_full_incremental_table, "results/combined_full_incremental_table.png")
 
 #' ## Tornado plot sensitivity analysis
-source("R/14_run_mean_trajectory.R")
+source("R/14_run_trajectory_one_way_analysis.R")
 source("R/15_cea_function_one_way_analysis.R")
 source("R/16_generate_tornado_data.R")
 source("R/17_tornado_plot_one_way.R")

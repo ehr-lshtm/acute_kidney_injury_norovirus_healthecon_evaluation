@@ -8,38 +8,38 @@ wtp_values_no_aki <- seq(0, 400000, by = 5000)
 
 inmb_under5_over65 <- cea_one_way_analysis_function(
   wtp = wtp_values,
-  data = mean_averted_combo_vaccination,
+  data = psa_mean_averted_combo_vaccination,
   inmb_output = TRUE)
 
 inmb_under5 <- cea_one_way_analysis_function(
   wtp = wtp_values,
-  data = mean_averted_under5_vaccination,
+  data = psa_mean_averted_under5_vaccination,
   inmb_output = TRUE
 )
 
 inmb_over65 <- cea_one_way_analysis_function(
   wtp = wtp_values,
-  data = mean_averted_over65_vaccination,
+  data = psa_mean_averted_over65_vaccination,
   inmb_output = TRUE
 )
 
 no_aki_inmb_under5_over65 <- cea_one_way_analysis_function(
   wtp = wtp_values_no_aki,
-  data = mean_averted_combo_vaccination,
+  data = psa_mean_averted_combo_vaccination,
   inmb_output = TRUE,
   aki_no_outcome = TRUE
 )
 
 no_aki_inmb_under5 <- cea_one_way_analysis_function(
   wtp = wtp_values_no_aki,
-  data = mean_averted_under5_vaccination,
+  data = psa_mean_averted_under5_vaccination,
   inmb_output = TRUE,
   aki_no_outcome = TRUE
 )
 
 no_aki_inmb_over65 <- cea_one_way_analysis_function(
   wtp = wtp_values_no_aki,
-  data = mean_averted_over65_vaccination,
+  data = psa_mean_averted_over65_vaccination,
   inmb_output = TRUE,
   aki_no_outcome = TRUE
 )

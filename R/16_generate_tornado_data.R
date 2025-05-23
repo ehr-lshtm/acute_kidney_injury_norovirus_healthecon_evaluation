@@ -62,27 +62,27 @@ upper_discounting <- cea_one_way_analysis_function (data = data, aki_no_outcome 
 data_name <- deparse(substitute(data))
 
 immunity_lower_data <- switch(data_name,
-                              "mean_averted_under5_vaccination" = mean_averted_under_5_vaccination_6mo_immunity,
-                              "mean_averted_over65_vaccination" = mean_averted_over65_vaccination_6mo_immunity,
-                              "mean_averted_combo_vaccination" = mean_averted_combo_vaccination_6mo_immunity
+                              "psa_mean_averted_under5_vaccination" = mean_averted_under5_vaccination_6mo_immunity,
+                              "psa_mean_averted_over65_vaccination" = mean_averted_over65_vaccination_6mo_immunity,
+                              "psa_mean_averted_combo_vaccination" = mean_averted_under5_over65_vaccination_6mo_immunity
 )
 
 immunity_upper_data <- switch(data_name,
-                              "mean_averted_under5_vaccination" = mean_averted_under_5_vaccination_9yr_immunity,
-                              "mean_averted_over65_vaccination" = mean_averted_over65_vaccination_9yr_immunity,
-                              "mean_averted_combo_vaccination" = mean_averted_combo_vaccination_9yr_immunity
+                              "psa_mean_averted_under5_vaccination" = mean_averted_under5_vaccination_9yr_immunity,
+                              "psa_mean_averted_over65_vaccination" = mean_averted_over65_vaccination_9yr_immunity,
+                              "psa_mean_averted_combo_vaccination" = mean_averted_under5_over65_vaccination_9yr_immunity
 )
 
 ve_lower_data <- switch(data_name,
-                        "mean_averted_under5_vaccination" = mean_averted_under_5_vaccination_30_VE,
-                        "mean_averted_over65_vaccination" = mean_averted_over65_vaccination_30_VE,
-                        "mean_averted_combo_vaccination" = mean_averted_combo_vaccination_30_VE
+                        "psa_mean_averted_under5_vaccination" = mean_averted_under5_vaccination_30_VE,
+                        "psa_mean_averted_over65_vaccination" = mean_averted_over65_vaccination_30_VE,
+                        "psa_mean_averted_combo_vaccination" = mean_averted_under5_over65_vaccination_30_VE
 )
 
 ve_upper_data <- switch(data_name,
-                        "mean_averted_under5_vaccination" = mean_averted_under_5_vaccination_90_VE,
-                        "mean_averted_over65_vaccination" = mean_averted_over65_vaccination_90_VE,
-                        "mean_averted_combo_vaccination" = mean_averted_combo_vaccination_90_VE
+                        "psa_mean_averted_under5_vaccination" = mean_averted_under5_vaccination_90_VE,
+                        "psa_mean_averted_over65_vaccination" = mean_averted_over65_vaccination_90_VE,
+                        "psa_mean_averted_combo_vaccination" = mean_averted_under5_over65_vaccination_90_VE
 )
 
 lower_immunity <- cea_one_way_analysis_function(data = immunity_lower_data, aki_no_outcome = aki_no_outcome)
@@ -188,10 +188,10 @@ tornado_data <- data.frame(
 return(tornado_data)
 }
 
-tornado_data_under5 <- generate_tornado_data(data = mean_averted_under5_vaccination, aki_no_outcome = FALSE)
-tornado_data_over65 <- generate_tornado_data(data = mean_averted_over65_vaccination, aki_no_outcome = FALSE)
-tornado_data_under5_over65 <- generate_tornado_data(data = mean_averted_combo_vaccination, aki_no_outcome = FALSE)
+tornado_data_under5 <- generate_tornado_data(data = psa_mean_averted_under5_vaccination, aki_no_outcome = FALSE)
+tornado_data_over65 <- generate_tornado_data(data = psa_mean_averted_over65_vaccination, aki_no_outcome = FALSE)
+tornado_data_under5_over65 <- generate_tornado_data(data = psa_mean_averted_combo_vaccination, aki_no_outcome = FALSE)
 
-no_aki_tornado_data_under5 <- generate_tornado_data(data = mean_averted_under5_vaccination, aki_no_outcome = TRUE)
-no_aki_tornado_data_over65 <- generate_tornado_data(data = mean_averted_over65_vaccination, aki_no_outcome = TRUE)
-no_aki_tornado_data_under5_over65 <- generate_tornado_data(data = mean_averted_combo_vaccination, aki_no_outcome = TRUE)
+no_aki_tornado_data_under5 <- generate_tornado_data(data = psa_mean_averted_under5_vaccination, aki_no_outcome = TRUE)
+no_aki_tornado_data_over65 <- generate_tornado_data(data = psa_mean_averted_over65_vaccination, aki_no_outcome = TRUE)
+no_aki_tornado_data_under5_over65 <- generate_tornado_data(data = psa_mean_averted_combo_vaccination, aki_no_outcome = TRUE)

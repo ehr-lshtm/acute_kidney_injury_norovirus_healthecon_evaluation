@@ -48,9 +48,9 @@ create_tornado_plot <- function(tornado_data, plot_title, y_min = -5000, y_max =
   return(tornado_plot)
 }
 
-tornado_plot_under5 <- create_tornado_plot(tornado_data_under5, "Vaccinating under 5", y_min = -5000, y_max = 10000)
-tornado_plot_over65 <- create_tornado_plot(tornado_data_over65, "Vaccinating over 65", y_min = -5000, y_max = 10000)
-tornado_plot_under5_over65 <- create_tornado_plot(tornado_data_under5_over65, "Vaccinating under 5 and 65+", y_min = -5000, y_max = 10000)
+tornado_plot_under5 <- create_tornado_plot(tornado_data_under5, "Vaccinating under 5", y_min = -5000, y_max = 12000)
+tornado_plot_over65 <- create_tornado_plot(tornado_data_over65, "Vaccinating over 65", y_min = -5000, y_max = 12000)
+tornado_plot_under5_over65 <- create_tornado_plot(tornado_data_under5_over65, "Vaccinating under 5 and 65+", y_min = -5000, y_max = 12000)
 
 torando_plot_no_aki_under5 <- create_tornado_plot(no_aki_tornado_data_under5, "Vaccinating under 5 without AKI", y_min = -200000, y_max = 600000)
 torando_plot_no_aki_over65 <- create_tornado_plot(no_aki_tornado_data_over65, "Vaccinating over 65 without AKI", y_min = -200000, y_max = 600000)

@@ -9,7 +9,7 @@ run_vaccination_scenarios <- function(params,
                                       vaccination_effect = 0.6,
                                       vaccination_rate = c(0, 0, 0, 0),
                                       immunity_waning = c(0, 0),
-                                      n_iterations = 5,
+                                      n_iterations = 20,
                                       scenario_label = "Default") {
   
   # Set basic parameters

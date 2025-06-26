@@ -157,6 +157,11 @@ ceac_plot <- prob_data %>%
     scale_color_manual(values = scenario_colors) +
     theme(
       legend.position = "top",
+      axis.text.x = element_text(size = 12),  # X-axis labels
+      axis.text.y = element_text(size = 12),  # Y-axis labels
+      axis.title.y = element_text(size = 12),  # Y-axis title
+      legend.text = element_text(size = 12),  # Legend labels
+      legend.title = element_text(size = 12),  # Legend title
       plot.title = element_text(hjust = 0.5),
       panel.grid.minor = element_blank()
     ) +
@@ -305,6 +310,11 @@ ceac_plot_no_aki <- prob_data_no_aki %>%
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +
@@ -366,6 +376,11 @@ ceac_frontier_plot <- ggplot(frontier_data, aes(x = wtp, y = Probability, color 
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +
@@ -426,6 +441,11 @@ ceac_frontier_plot_no_aki <- ggplot(frontier_data_no_aki, aes(x = wtp, y = Proba
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +

@@ -48,7 +48,8 @@ p_load(
   tidyverse,
   lhs,
   scales,
-  webshot2
+  webshot2,
+  janitor
 )
 
 # source("paths/00_filepath.R")

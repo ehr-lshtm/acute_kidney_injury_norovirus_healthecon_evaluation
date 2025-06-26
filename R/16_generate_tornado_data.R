@@ -44,8 +44,8 @@ lower_noro_hosp_parameter_3 <- cea_one_way_analysis_function (data = data, aki_n
 upper_noro_hosp_parameter_3 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_hosp_parameter_3 = 0.00033)
 lower_noro_hosp_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_hosp_parameter_4 = 0.033)
 upper_noro_hosp_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_hosp_parameter_4 = 0.114)
-lower_aki_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, aki_hosp_parameter_4 = 0.179)
-upper_aki_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, aki_hosp_parameter_4 = 0.363)
+lower_aki_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, aki_hosp_parameter_4 = 0.075)
+upper_aki_parameter_4 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, aki_hosp_parameter_4 = 0.18)
 lower_noro_mortality_1 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_morality_parameter_1 = 0.0000057)
 upper_noro_mortality_1 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_morality_parameter_1 = 0.0000067)
 lower_noro_mortality_2 <- cea_one_way_analysis_function (data = data, aki_no_outcome = aki_no_outcome, noro_morality_parameter_2 = 0.0000043)
@@ -114,7 +114,7 @@ tornado_data <- data.frame(
     "Norovirus Hosp 5-14 (0.0003-0.0005)",
     "Norovirus Hosp 15-64 (0.0002-0.00033)",
     "Norovirus Hosp 65+ (0.033-0.114)",
-    "AKI Hosp 65+ (0.179-0.363)",
+    "AKI Hosp 65+ (0.075-0.18)",
     "Noro Mortality 0-4 (0.0000057-0.0000067)",
     "Noro Mortality 5-14 (0.0000043-0.00005)",
     "Noro Mortality 15-64 (0.0000043-0.00005)",
@@ -187,6 +187,26 @@ tornado_data <- data.frame(
 
 return(tornado_data)
 }
+
+### load mean averted data for one way analysis
+
+mean_averted_under5_vaccination_6mo_immunity <- read_parquet("data/mean_averted_under5_vaccination_6mo_immunity.parquet")
+mean_averted_over65_vaccination_6mo_immunity <- read_parquet("data/mean_averted_over65_vaccination_6mo_immunity.parquet")
+mean_averted_under5_over65_vaccination_6mo_immunity <- read_parquet("data/mean_averted_under5_over65_vaccination_6mo_immunity.parquet")
+
+mean_averted_under5_vaccination_9yr_immunity <- read_parquet("data/mean_averted_under5_vaccination_9yr_immunity.parquet")
+mean_averted_over65_vaccination_9yr_immunity <- read_parquet("data/mean_averted_over65_vaccination_9yr_immunity.parquet")
+mean_averted_under5_over65_vaccination_9yr_immunity <- read_parquet("data/mean_averted_under5_over65_vaccination_9yr_immunity.parquet")
+
+mean_averted_under5_vaccination_30_VE <- read_parquet("data/mean_averted_under5_vaccination_30_VE.parquet")
+mean_averted_over65_vaccination_30_VE <- read_parquet("data/mean_averted_over65_vaccination_30_VE.parquet")
+mean_averted_under5_over65_vaccination_30_VE <- read_parquet("data/mean_averted_under5_over65_vaccination_30_VE.parquet")
+
+mean_averted_under5_vaccination_90_VE <- read_parquet("data/mean_averted_under5_vaccination_90_VE.parquet")
+mean_averted_over65_vaccination_90_VE <- read_parquet("data/mean_averted_over65_vaccination_90_VE.parquet")
+mean_averted_under5_over65_vaccination_90_VE <- read_parquet("data/mean_averted_under5_over65_vaccination_90_VE.parquet")
+
+### generate tornado data
 
 tornado_data_under5 <- generate_tornado_data(data = psa_mean_averted_under5_vaccination, aki_no_outcome = FALSE)
 tornado_data_over65 <- generate_tornado_data(data = psa_mean_averted_over65_vaccination, aki_no_outcome = FALSE)

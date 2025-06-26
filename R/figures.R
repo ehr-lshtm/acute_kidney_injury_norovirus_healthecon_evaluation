@@ -105,7 +105,7 @@ for (param in 4:4) {
 }
 
 
-par(mfrow = c(2, 4))
+par(mfrow = c(3, 4))
 
 for (param in 1:4) {
   plot(density(parameter_probabilistic_samples$probabilistic$noro_mortality_parameters[[param]]),
@@ -119,15 +119,14 @@ for (param in 1:4) {
        ylab = "Density")
 }
 
-par(mfrow = c(2, 3))
+par(mfrow = c(3, 3))
+
 for (qaly_type in names(parameter_probabilistic_samples$probabilistic$qalys)) {
   plot(density(parameter_probabilistic_samples$probabilistic$qalys[[qaly_type]]),
        main = paste("QALY -", qaly_type),
        xlab = "QALY",
        ylab = "Density")
 }
-
-par(mfrow = c(3, 3))
 
 for (cost_type in names(parameter_probabilistic_samples$probabilistic$costs)) {
   plot(density(parameter_probabilistic_samples$probabilistic$costs[[cost_type]]),
@@ -163,8 +162,8 @@ fig_time_series <- annotate_figure(
     # labels = c("Under 5 vaccination", "Over 65 vaccination", "Combination vaccination"),
     font.label = list(size = 12)
   ),
-  bottom = text_grob("Time (days) per season (S)"),
-  left = text_grob("Number of symptomatic cases", rot = 90)
+  bottom = text_grob("Time (days) per season (S)", size = 14),
+  left = text_grob("Number of symptomatic cases", rot = 90, size = 14)
 )
 
 #' A. Symptomatic cases under 5 B. Symptomatic cases between 5 and 64 c. Symptomatic cases over 65
@@ -183,12 +182,13 @@ fig_bar_chart <- annotate_figure(
     common.legend = TRUE, 
     legend = "none",
     labels = c("A) Under 5 cases", "B) 5-64 cases", "C) 65+ cases"),
-    font.label = list(size = 12)
+    font.label = list(size = 14),
+    widths = c(1.2, 1.2, 1.2)  # Make each panel wider
     # widths = c(1, 1),
     # heights = c(1)
   ),
-  bottom = text_grob("Vaccination strategy"),
-  left = text_grob("Percentage symptomatic cases averted", rot = 90)
+  bottom = text_grob("Vaccination strategy", size = 14),
+  left = text_grob("Percentage symptomatic cases averted", rot = 90, size = 14)
 )
 
 # ggarrange(fig_time_series + theme(aspect.ratio = 0.5), fig_bar_chart + theme(aspect.ratio = 0.6), ncol = 1, nrow = 2)
@@ -200,7 +200,8 @@ save_plot(fig_time_series, "results/fig_time_series.png")
 
 fig_bar_chart
 
-save_plot(fig_bar_chart, "results/fig_bar_chart.png")
+ggsave("results/fig_bar_chart.png", fig_bar_chart, width = 12, height = 6, dpi = 300)
+
 
 #' A. Averted symptomatic cases under 5 B. Averted symptomatic cases between 5 and 64 C. Averted symptomatic cases over 65 
 
@@ -664,7 +665,36 @@ cea_plot <- ggarrange(
 
 save_plot(cea_plot, "results/cea_plot.png")
 
+#' cea plot percentages
 
+# Function to add cost categories and generate tabyl summaries
+analyze_cost_effectiveness <- function(data, name = NULL) {
+  result <- data |>
+    mutate(
+      cost_saving = as.numeric(icer < 0),
+      cost_effective = as.numeric(icer < 20000)
+    )
+  
+  # Print results with optional name prefix
+  prefix <- if (!is.null(name)) paste0(name, " - ") else ""
+  
+  cat(prefix, "Cost Saving:\n")
+  print(result |> tabyl(cost_saving))
+  cat("\n", prefix, "Cost Effective:\n")
+  print(result |> tabyl(cost_effective))
+  cat("\n")
+  
+  return(result)
+}
+
+# Apply to all datasets
+under5_percentages <- analyze_cost_effectiveness(under5_prob_results_table, "Under5")
+over65_percentages <- analyze_cost_effectiveness(over65_prob_results_table, "Over65")
+under5_over65_percentages <- analyze_cost_effectiveness(under5_over65_prob_results_table, "Under5 & Over65")
+
+no_aki_under5_percentages <- analyze_cost_effectiveness(no_aki_under5_prob_results_table, "No AKI Under5")
+no_aki_over65_percentages <- analyze_cost_effectiveness(no_aki_over65_prob_results_table, "No AKI Over65")
+no_aki_under5_over65_percentages <- analyze_cost_effectiveness(no_aki_under5_over65_prob_results_table, "No AKI Under5 & Over65")
 
 #' ## Incremental Net Monetary Benefit (INMB) for different vaccination strategies
 
@@ -710,6 +740,18 @@ ceac_combined_plot <- ggarrange(
 ceac_combined_plot
 
 save_plot(ceac_combined_plot, "results/ceac_combined_plot.png")
+
+
+prob_data |> 
+  filter(wtp == 0)
+
+prob_data |> 
+  filter(wtp == 20000)
+
+prob_data_no_aki |> 
+  filter(wtp == 144000)
+
+evpi_data
 
 #' ## threshold analysis of AKI hospitalisations rate in over 65
 
@@ -759,5 +801,7 @@ annotate_figure(
   bottom = text_grob("Vaccine cost"),
   left = text_grob("Incremental cost effectiveness ratio (ICER)", rot = 90)
 )
+
+vaccine_cost_threshold
 
 #' Theshold analysis A. V1 under 5 B. V2 over 65 C. V3 under 5 and 65+

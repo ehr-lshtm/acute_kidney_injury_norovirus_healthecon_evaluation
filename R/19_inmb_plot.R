@@ -106,6 +106,14 @@ inmb_plot <- ggplot(inmb_long, aes(x = wtp, y = inmb, color = strategy)) +
     )
   ) +
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12)  # Legend title
+    
+  ) +
   scale_x_continuous(labels = scales::comma, 
                      # expand = expansion(mult = 0.1),
                      breaks = seq(0, 80000, by = 20000),
@@ -128,6 +136,14 @@ no_aki_inmb_plot <- ggplot(no_aki_inmb_long, aes(x = wtp, y = inmb, color = stra
     )
   ) +
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12)  # Legend title
+    
+  ) +
   # scale_x_continuous(labels = scales::comma, 
   #                    expand = expansion(mult = 0.1),
   #                    breaks = seq(0, 75000, by = 10000),

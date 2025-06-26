@@ -57,15 +57,15 @@ create_vaccination_impact_plot <- function(
   # Create custom theme
   custom_theme <- theme_classic() +
     theme(
-      plot.title = element_text(size = 11, face = "bold", hjust = 0.5),
-      axis.title = element_text(size = 10),
-      axis.text = element_text(size = 9),
+      plot.title = element_text(size = 12, face = "bold", hjust = 0.5),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 12),
       axis.text.x = element_text(angle = 45, hjust = 1),
       legend.position = "bottom",
       legend.box = "vertical",
       legend.margin = margin(t = 5, b = 5),
-      legend.text = element_text(size = 9),
-      legend.title = element_text(size = 10),
+      legend.text = element_text(size = 12),
+      legend.title = element_text(size = 12),
       panel.grid.major.y = element_line(color = "grey90", linetype = "dashed"),
       plot.margin = margin(t = 10, r = 10, b = 20, l = 10)
     )

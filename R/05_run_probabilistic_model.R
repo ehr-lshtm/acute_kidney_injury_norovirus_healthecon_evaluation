@@ -9,7 +9,7 @@ run_vaccination_scenarios <- function(params,
                                       vaccination_effect = 0.6,
                                       vaccination_rate = c(0, 0, 0, 0),
                                       immunity_waning = c(0, 0),
-                                      n_iterations = 20,
+                                      n_iterations = 1000,
                                       scenario_label = "Default") {
   
   # Set basic parameters
@@ -112,63 +112,63 @@ generate_uncertainty_bounds <- function(data) {
 # saveRDS(parameter_probabilistic_samples, "data/parameter_probabilistic_samples_list.rds")
 # parameter_probabilistic_samples <- readRDS("data/parameter_probabilistic_samples_list.rds")
 
-no_vaccination <- run_vaccination_scenarios(
-  params = default_parameters(),
-  vaccination_effect = 0.5,
-  vaccination_rate = c(0, 0, 0, 0),  # Under 5 vaccination
-  immunity_waning = c(0, 0),     # 4.5 year immunity
-  scenario_label = "No Vaccination",
-  n_iterations = n_iter
-)
-
-write_parquet(no_vaccination, "data/no_vaccination.parquet")
-no_vaccination_uncertainty <- generate_uncertainty_bounds(no_vaccination)
-write_parquet(no_vaccination_uncertainty, "data/no_vaccination_uncertainty.parquet")
-remove(no_vaccination)
-gc()
-
-under_5_vaccination <- run_vaccination_scenarios(
-  params = default_parameters(),
-  vaccination_effect = 0.5,
-  vaccination_rate = c(target_coverage_under5/days_to_target, 0, 0, 0),  # Under 5 vaccination
-  immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
-  scenario_label = "Under 5 vaccination",
-  n_iterations = n_iter
-)
-
-write_parquet(under_5_vaccination, "data/under_5_vaccination.parquet")
-under_5_vaccination_uncertainty <- generate_uncertainty_bounds(under_5_vaccination)
-write_parquet(under_5_vaccination_uncertainty, "data/under_5_vaccination_uncertainty.parquet")
-remove(under_5_vaccination)
-gc()
-
-
-over65_vaccination <- run_vaccination_scenarios(
-  params = default_parameters(),
-  vaccination_effect = 0.5,
-  vaccination_rate = c(0, 0, 0, target_coverage_over65/days_to_target),  # Over 65 vaccination
-  immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
-  scenario_label = "Over 65 vaccination",
-  n_iterations = n_iter
-)
-
-write_parquet(over65_vaccination, "data/over65_vaccination.parquet")
-over65_vaccination_uncertainty <- generate_uncertainty_bounds(over65_vaccination)
-write_parquet(over65_vaccination_uncertainty, "data/over65_vaccination_uncertainty.parquet")
-remove(over65_vaccination)
-gc()
-
-under5_over65_vaccination <- run_vaccination_scenarios(
-  params = default_parameters(),
-  vaccination_effect = 0.5,
-  vaccination_rate = c(target_coverage_under5/days_to_target, 0, 0, target_coverage_over65/days_to_target),  # Over 65 vaccination
-  immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
-  scenario_label = "Under 5 and 65+ vaccination",
-  n_iterations = n_iter
-)
-
-write_parquet(under5_over65_vaccination, "data/under5_over65_vaccination.parquet")
-under5_over65_vaccination_uncertainty <- generate_uncertainty_bounds(under5_over65_vaccination)
-write_parquet(under5_over65_vaccination_uncertainty, "data/under5_over65_vaccination_uncertainty.parquet")
-remove(under5_over65_vaccination)
-gc()
+# no_vaccination <- run_vaccination_scenarios(
+#   params = default_parameters(),
+#   vaccination_effect = 0.5,
+#   vaccination_rate = c(0, 0, 0, 0),  # Under 5 vaccination
+#   immunity_waning = c(0, 0),     # 4.5 year immunity
+#   scenario_label = "No Vaccination",
+#   n_iterations = n_iter
+# )
+# 
+# write_parquet(no_vaccination, "data/no_vaccination.parquet")
+# no_vaccination_uncertainty <- generate_uncertainty_bounds(no_vaccination)
+# write_parquet(no_vaccination_uncertainty, "data/no_vaccination_uncertainty.parquet")
+# remove(no_vaccination)
+# gc()
+# 
+# under_5_vaccination <- run_vaccination_scenarios(
+#   params = default_parameters(),
+#   vaccination_effect = 0.5,
+#   vaccination_rate = c(target_coverage_under5/days_to_target, 0, 0, 0),  # Under 5 vaccination
+#   immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
+#   scenario_label = "Under 5 vaccination",
+#   n_iterations = n_iter
+# )
+# 
+# write_parquet(under_5_vaccination, "data/under_5_vaccination.parquet")
+# under_5_vaccination_uncertainty <- generate_uncertainty_bounds(under_5_vaccination)
+# write_parquet(under_5_vaccination_uncertainty, "data/under_5_vaccination_uncertainty.parquet")
+# remove(under_5_vaccination)
+# gc()
+# 
+# 
+# over65_vaccination <- run_vaccination_scenarios(
+#   params = default_parameters(),
+#   vaccination_effect = 0.5,
+#   vaccination_rate = c(0, 0, 0, target_coverage_over65/days_to_target),  # Over 65 vaccination
+#   immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
+#   scenario_label = "Over 65 vaccination",
+#   n_iterations = n_iter
+# )
+# 
+# write_parquet(over65_vaccination, "data/over65_vaccination.parquet")
+# over65_vaccination_uncertainty <- generate_uncertainty_bounds(over65_vaccination)
+# write_parquet(over65_vaccination_uncertainty, "data/over65_vaccination_uncertainty.parquet")
+# remove(over65_vaccination)
+# gc()
+# 
+# under5_over65_vaccination <- run_vaccination_scenarios(
+#   params = default_parameters(),
+#   vaccination_effect = 0.5,
+#   vaccination_rate = c(target_coverage_under5/days_to_target, 0, 0, target_coverage_over65/days_to_target),  # Over 65 vaccination
+#   immunity_waning = c((1/(2*365)), 0),     # 4.5 year immunity
+#   scenario_label = "Under 5 and 65+ vaccination",
+#   n_iterations = n_iter
+# )
+# 
+# write_parquet(under5_over65_vaccination, "data/under5_over65_vaccination.parquet")
+# under5_over65_vaccination_uncertainty <- generate_uncertainty_bounds(under5_over65_vaccination)
+# write_parquet(under5_over65_vaccination_uncertainty, "data/under5_over65_vaccination_uncertainty.parquet")
+# remove(under5_over65_vaccination)
+# gc()

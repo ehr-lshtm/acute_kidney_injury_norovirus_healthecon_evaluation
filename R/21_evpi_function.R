@@ -125,8 +125,12 @@ evpi_plot <- ggplot(evpi_data, aes(x = wtp, y = evpi/1000000)) +
   theme(
     panel.grid.minor = element_blank(),
     plot.title = element_text(face = "bold"),
-    axis.text = element_text(size = 10),
-    axis.title = element_text(size = 11)
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12)  # Legend title
+    
   )
 
 ###
@@ -155,6 +159,10 @@ evpi_plot_no_aki <- ggplot(no_aki_evpi_data, aes(x = wtp, y = evpi/1000000)) +
   theme(
     panel.grid.minor = element_blank(),
     plot.title = element_text(face = "bold"),
-    axis.text = element_text(size = 10),
-    axis.title = element_text(size = 11)
+    axis.text.x = element_text(size = 12),  # X-axis labels
+    axis.text.y = element_text(size = 12),  # Y-axis labels
+    axis.title.y = element_text(size = 12),  # Y-axis title
+    legend.text = element_text(size = 12),  # Legend labels
+    legend.title = element_text(size = 12)  # Legend title
+    
   )

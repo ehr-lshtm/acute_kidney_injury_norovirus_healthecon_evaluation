@@ -130,6 +130,11 @@ cea_plane <-  under5_over65_prob_results_table %>%
     )
   ) +
   theme(legend.position = "bottom",
+        axis.text.x = element_text(size = 14),  # X-axis labels
+        axis.text.y = element_text(size = 14),  # Y-axis labels
+        axis.title.y = element_text(size = 16),  # Y-axis title
+        legend.text = element_text(size = 14),  # Legend labels
+        legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
         panel.grid.minor = element_line(color = "gray95")) +
   scale_x_continuous(labels = scales::comma, 
@@ -176,6 +181,11 @@ cea_plane <-  under5_over65_prob_results_table %>%
     )
   ) +
   theme(legend.position = "bottom",
+        axis.text.x = element_text(size = 14),  # X-axis labels
+        axis.text.y = element_text(size = 14),  # Y-axis labels
+        axis.title.y = element_text(size = 16),  # Y-axis title
+        legend.text = element_text(size = 14),  # Legend labels
+        legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
         panel.grid.minor = element_line(color = "gray95")) +
   scale_x_continuous(labels = scales::comma, 
@@ -232,6 +242,11 @@ cea_plane_no_aki <- no_aki_under5_prob_results_table %>%
     )
   ) +
   theme(legend.position = "bottom",
+        axis.text.x = element_text(size = 14),  # X-axis labels
+        axis.text.y = element_text(size = 14),  # Y-axis labels
+        axis.title.y = element_text(size = 16),  # Y-axis title
+        legend.text = element_text(size = 14),  # Legend labels
+        legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
         panel.grid.minor = element_line(color = "gray95")) +
   scale_x_continuous(labels = scales::comma, 
@@ -275,6 +290,11 @@ cea_plane_both <- plot_data_both %>%
     )
   ) +
   theme(legend.position = "bottom",
+        axis.text.x = element_text(size = 14),  # X-axis labels
+        axis.text.y = element_text(size = 14),  # Y-axis labels
+        axis.title.y = element_text(size = 16),  # Y-axis title
+        legend.text = element_text(size = 14),  # Legend labels
+        legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
         panel.grid.minor = element_line(color = "gray95")) +
   scale_x_continuous(labels = scales::comma, 

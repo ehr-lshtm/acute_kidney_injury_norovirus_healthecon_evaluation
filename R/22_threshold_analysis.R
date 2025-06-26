@@ -121,8 +121,8 @@ threshold_analysis_plot <- function (data) {
   # Enhanced theme
   theme_minimal() +
     theme(
-      axis.title = element_text(size = 10),
-      axis.text = element_text(size = 9),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 12),
       panel.grid.minor = element_line(color = "grey95"),  # Make minor grid lines lighter
       panel.grid.major = element_line(color = "grey90"),
       plot.caption = element_text(size = 8, color = "grey40"),
@@ -196,6 +196,8 @@ for (i in seq_along(vaccine_cost_values)) {
 
 }
 
+vaccine_threshold_under5_over65_df <- vaccine_threshold_under5_over65_df %>% mutate(strategy = "V3 under 5 and 65+")
+
 #######################
 #######################
 #######################
@@ -222,6 +224,8 @@ for (i in seq_along(vaccine_cost_values)) {
   vaccine_threshold_under5_df <- rbind(vaccine_threshold_under5_df, current_row)
 
 }
+
+vaccine_threshold_under5_df <- vaccine_threshold_under5_df %>% mutate(strategy = "V1 under 5")
 
 #######################
 #######################
@@ -250,6 +254,9 @@ for (i in seq_along(vaccine_cost_values)) {
 
 }
 
+vaccine_threshold_over65_df <- vaccine_threshold_over65_df %>% mutate(strategy = "V2 65+")
+
+
 # plot
 
 # Create enhanced plot
@@ -273,8 +280,8 @@ vaccine_threshold_analysis_plot <- function (data) {
     # Enhanced theme
     theme_minimal() +
     theme(
-      axis.title = element_text(size = 10),
-      axis.text = element_text(size = 9),
+      axis.title = element_text(size = 12),
+      axis.text = element_text(size = 12),
       panel.grid.minor = element_blank(),
       panel.grid.major = element_line(color = "grey90"),
       plot.caption = element_text(size = 8, color = "grey40"),
@@ -308,6 +315,60 @@ annotate_figure(
   bottom = text_grob("Vaccine cost"),
   left = text_grob("Incremental cost effectiveness ratio (ICER)", rot = 90)
 )
+
+vaccine_cost_threshold <- vaccine_threshold_under5_over65_df %>%
+  rbind(vaccine_threshold_under5_df, vaccine_threshold_over65_df) %>%
+  ggplot(aes(x = vaccine_cost_values, y = result, colour = strategy, linetype = strategy)) +
+  annotate("rect", 
+           xmin = -Inf, xmax = Inf,
+           ymin = -20000, ymax = 60000,
+           fill = "grey80",
+           alpha = 0.3) +
+  # Add main line with improved aesthetics
+  geom_line(size = 1.1) +
+  # Add cost-effectiveness threshold
+  geom_hline(yintercept = 20000, linetype = "dashed", color = "black", size = 0.8) +
+  # Add points for actual data points
+  geom_point(color = "#2C3E50", size = 1) +
+  # Improve labels
+  labs(
+    x = "Cost of the vaccine (GBP)",
+    y = "Average incremental cost-effectiveness ratio (ICER)") +
+  # Enhanced theme
+  theme_minimal() +
+  theme(
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 12),
+    # Add more spacing between title and text
+    axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0)),
+    axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)),
+    panel.grid.minor = element_line(color = "grey95"),  # Make minor grid lines lighter
+    panel.grid.major = element_line(color = "grey90"),
+    plot.caption = element_text(size = 8, color = "grey40"),
+    plot.margin = margin(t = 20, r = 20, b = 20, l = 20),
+    legend.position = "top",  # Legend at top
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 12),
+    # Improve legend spacing and layout
+    legend.margin = margin(b = 15), # Add space below the legend
+    legend.key.width = unit(2, "cm") # Make the legend keys wider to show line styles better
+  ) +
+  # Format axis
+  scale_x_continuous(
+    # Major breaks (for labels) every 0.1
+    breaks = seq(0, 500, by = 50)
+    # Minor breaks (for gridlines) every 0.05
+    # minor_breaks = seq(0, 0.01, by = 0.0025),
+    # labels = scales::number_format(accuracy = 0.01)
+  ) +
+  scale_y_continuous(
+    labels = scales::comma_format(),
+    breaks = seq(-20000, 60000, by = 10000),
+    limits = c(-20000, 60000)
+  ) +
+  scale_colour_manual(values = scenario_colors_threshold) +
+  # Add different line types for each strategy
+  scale_linetype_manual(values = c("solid", "dashed", "dotted", "longdash"))
 
 
 ##############
@@ -417,7 +478,7 @@ incremental_threshold <- threshold_under5_over65_df %>%
   theme_minimal() +
   theme(
     axis.title = element_text(size = 12),
-    axis.text = element_text(size = 9),
+    axis.text = element_text(size = 12),
     # Add more spacing between title and text
     axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0)),
     axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)),
@@ -426,7 +487,7 @@ incremental_threshold <- threshold_under5_over65_df %>%
     plot.caption = element_text(size = 8, color = "grey40"),
     plot.margin = margin(t = 20, r = 20, b = 20, l = 20),
     legend.position = "top",  # Legend at top
-    legend.title = element_text(size = 10),
+    legend.title = element_text(size = 12),
     legend.text = element_text(size = 12),
     # Improve legend spacing and layout
     legend.margin = margin(b = 15), # Add space below the legend

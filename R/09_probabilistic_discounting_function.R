@@ -11,7 +11,7 @@ discounting_data_probabilistic <- function(data,
                                            average_life_expectancy,
                                            qaly_discount_rate,
                                            cost_discount_rate,
-                                           cost_factor,
+                                           cost_inflation_rate,
                                            qaly_noro_gp_attendance,
                                            qaly_noro_hospitalisation,
                                            qaly_aki_hospitalisation,
@@ -30,20 +30,21 @@ discounting_data_probabilistic <- function(data,
     mutate(discount_years = as.numeric(gsub("S", "", season))) %>% 
     arrange(discount_years) %>%
     mutate(
-      qaly_discounted_rate = (1 + qaly_discount_rate) ^ -discount_years,
-      cost_discounted_rate = (1 + cost_discount_rate) ^ -discount_years,
+      qaly_discounted_rate = (1 + qaly_discount_rate) ^ - (discount_years - 0.5),
+      cost_discounted_rate = (1 + cost_discount_rate) ^ -(discount_years - 0.5),
+      cost_inflation_factor = (1 + cost_inflation_rate) ^ discount_years,
       
       # gp attendance
       gp_attendances = total_infections * gp_parameter,
       qaly_loss_gp_attendances = gp_attendances * qaly_loss_per_noro_gp_attendance_episode,
-      cost_gp_attendances = gp_attendances * cost_noro_gp_attendance * cost_factor,
+      cost_gp_attendances = gp_attendances * cost_noro_gp_attendance * cost_inflation_factor,
       discounted_qaly_loss_gp_attendances = qaly_loss_gp_attendances * qaly_discounted_rate,
       discounted_cost_gp_attendances = cost_gp_attendances * cost_discounted_rate,
       
       # noro hospitalisations
       noro_hospitalisations = total_infections * noro_hosp_parameter,
       qaly_loss_noro_hospitalisation = noro_hospitalisations * qaly_loss_per_noro_hospitalisiation_episode,
-      cost_noro_hospitalisations = noro_hospitalisations * cost_noro_hosp * cost_factor,
+      cost_noro_hospitalisations = noro_hospitalisations * cost_noro_hosp * cost_inflation_factor,
       discounted_qaly_loss_noro_hospitalisation = qaly_loss_noro_hospitalisation * qaly_discounted_rate,
       discounted_cost_noro_hospitalisations = cost_noro_hospitalisations * cost_discounted_rate,
       
@@ -55,7 +56,7 @@ discounting_data_probabilistic <- function(data,
       # aki hospitalisations
       aki_hospitalisations = total_infections * aki_hosp_parameter,
       qaly_loss_aki_hospitalisation = aki_hospitalisations * qaly_loss_per_aki_hospitalisation_episode,
-      cost_aki_hospitalisations = aki_hospitalisations * cost_aki_hosp * cost_factor,
+      cost_aki_hospitalisations = aki_hospitalisations * cost_aki_hosp * cost_inflation_factor,
       discounted_qaly_loss_aki_hospitalisation = qaly_loss_aki_hospitalisation * qaly_discounted_rate,
       discounted_cost_aki_hospitalisations = cost_aki_hospitalisations * cost_discounted_rate,
       
@@ -65,11 +66,11 @@ discounting_data_probabilistic <- function(data,
       discounted_qale_loss_aki_mortality = qale_loss_aki_mortality * qaly_discounted_rate,
       
       # cost per dose
-      vaccination_cost = total_vaccinated * cost_per_dose,
+      vaccination_cost = total_vaccinated * cost_per_dose * cost_inflation_factor,
       discounted_cost_per_dose = vaccination_cost * cost_discounted_rate,
       
       # admin per dose
-      admin_cost = total_vaccinated * admin_per_dose,
+      admin_cost = total_vaccinated * admin_per_dose * cost_inflation_factor,
       discounted_admin_per_dose = admin_cost * cost_discounted_rate
       
     ) %>%
@@ -77,7 +78,8 @@ discounting_data_probabilistic <- function(data,
            # -Iteration,
            -discount_years,
            -qaly_discounted_rate,
-           -cost_discounted_rate) %>%
+           -cost_discounted_rate,
+           -cost_inflation_factor) %>%
     # group_by(scenario) %>%
     summarise(across(everything(), sum, na.rm = TRUE)) %>%
     {if(probabilistic_discounting) select(., -Iteration) else .}

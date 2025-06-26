@@ -80,6 +80,13 @@ averted_cases_under5_bar_chart <- data.frame(
     position = position_dodge(width = 0.9)  # Add this to ensure proper alignment
   ) +
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 11),  # X-axis labels
+    axis.text.y = element_text(size = 11),  # Y-axis labels
+    axis.title.y = element_text(size = 16),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 16)  # Legend title
+  ) +
   labs(
     title = "Averted under 5 cases",
     x = NULL,
@@ -154,6 +161,13 @@ averted_cases_15_64_bar_chart <- data.frame(
     color = "black"
   ) +
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 11),  # X-axis labels
+    axis.text.y = element_text(size = 11),  # Y-axis labels
+    axis.title.y = element_text(size = 16),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 16)  # Legend title
+  ) +
   labs(
     title = "Averted 15-64 cases",
     x = NULL,
@@ -227,6 +241,13 @@ averted_cases_over65_bar_chart <- data.frame(
     color = "black"
   ) +
   theme_minimal() +
+  theme(
+    axis.text.x = element_text(size = 11),  # X-axis labels
+    axis.text.y = element_text(size = 11),  # Y-axis labels
+    axis.title.y = element_text(size = 16),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 16)  # Legend title
+  ) +
   labs(
     title = "Averted over 65 cases",
     x = NULL,

@@ -272,18 +272,26 @@ gc()
 
 combined_age_group_total_table <- no_vaccination_total_health_outcomes$total_summary_stats %>% 
   bind_rows(under5_vaccination_total_health_outcomes$total_summary_stats, over65_vaccination_total_health_outcomes$total_summary_stats, combo_vaccination_total_health_outcomes$total_summary_stats) %>%
-  mutate(scenario = NA) %>% 
+  mutate(scenario = NA) %>%
+  mutate(aki_mortality = case_when(age_group == "0-4" ~ "Not applicable",
+                                   age_group == "5-14" ~ "Not applicable",
+                                   age_group == "15-64" ~ "Not applicable",
+                                   TRUE ~ aki_mortality),
+         aki_hospitalisation = case_when(age_group == "0-4" ~ "Not applicable",
+                                   age_group == "5-14" ~ "Not applicable",
+                                   age_group == "15-64" ~ "Not applicable",
+                                   TRUE ~ aki_hospitalisation)) |> 
   add_row(.before = 1) %>%
   mutate(scenario = case_when(is.na(scenario) ~ "No vaccination",
                               TRUE ~ scenario)) %>%
   add_row(.before = 6) %>%
-  mutate(scenario = case_when(is.na(scenario) ~ "V1 under 5",
+  mutate(scenario = case_when(is.na(scenario) ~ "V1",
                               TRUE ~ scenario)) %>% 
   add_row(.before = 11) %>%
-  mutate(scenario = case_when(is.na(scenario) ~ "V2 over 65",
+  mutate(scenario = case_when(is.na(scenario) ~ "V2",
                               TRUE ~ scenario)) %>% 
   add_row(.before = 16) %>%
-  mutate(scenario = case_when(is.na(scenario) ~ "V3 under 5 and over 65",
+  mutate(scenario = case_when(is.na(scenario) ~ "V3",
                               TRUE ~ scenario)) %>%
   mutate(scenario = case_when(
     !is.na(total_infections) ~ NA,
@@ -308,7 +316,8 @@ combined_age_group_total_table <- no_vaccination_total_health_outcomes$total_sum
   padding(padding = 3, part = "all") %>%
   hline(i = c(5, 10, 15)) %>% 
   align(align = "left", part = "all") %>%
-  align(align = "right", j = 2:9, part = "body")
+  align(align = "right", j = 2:9, part = "body") %>%
+  theme_booktabs()
 
 #### calculating incidence outcomes for no vaccination
 

@@ -121,7 +121,7 @@ tornado_data <- data.frame(
     "Noro Mortality 65+ (0.0004-0.00047)",
     "AKI Mortality 65+ (0.116-0.845)",
     "Vaccine Efficacy (30-90%)",
-    "Immunity Duration (6 mo-8 yrs)",
+    "Vaccine immunity duration (6 mo-8.9 yrs)",
     "Discounting (0-1.5%)"
   ),
   ICER_lower = c(

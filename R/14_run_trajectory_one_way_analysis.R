@@ -46,7 +46,7 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 
 ##### due to computational burden - code below is run only once and saved to file
 
-# n_iter = 1000
+# n_iter = 2000
 # 
 # run_and_save_scenario <- function(vaccination_rates, vaccination_effect = 0.6, immunity_waning, scenario_label, filename) {
 #   # Run the scenario (no suffix parameter)
@@ -56,16 +56,16 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 #     vaccination_rate = vaccination_rates,
 #     immunity_waning = immunity_waning,
 #     scenario_label = scenario_label,
-#     n_iterations = 1000
+#     n_iterations = 2000
 #   )
-#   
+# 
 #   # Save to file
 #   write_parquet(result, paste0("data/", filename, ".parquet"))
-#   
+# 
 #   # Clean up memory
 #   remove(result)
 #   gc()
-#   
+# 
 #   invisible(NULL)
 # }
 # 
@@ -76,14 +76,14 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 # calculate_averted_cases <- function(baseline_file, intervention_file, suffix = NULL) {
 #   # Load baseline (no vaccination) data
 #   baseline_data <- process_vaccination_data(baseline_file)
-#   
+# 
 #   # Load intervention data - only pass suffix if it's not NULL
 #   if (is.null(suffix)) {
 #     intervention_data <- process_vaccination_data(intervention_file)
 #   } else {
 #     intervention_data <- process_vaccination_data(intervention_file, suffix = suffix)
 #   }
-#   
+# 
 #   # Join datasets and calculate averted cases
 #   if (is.null(suffix)) {
 #     # For baseline scenarios (no vaccination), averted cases are 0
@@ -93,8 +93,8 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 #         averted_5_14 = 0,
 #         averted_15_64 = 0,
 #         averted_over65 = 0
-#       ) %>% 
-#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>% 
+#       ) %>%
+#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
 #       group_by(season) %>%
 #       summarize(
 #         averted_under5 = mean(averted_under5, na.rm = TRUE),
@@ -109,16 +109,16 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 #       )
 #   } else {
 #     # For intervention scenarios, calculate averted cases
-#     result <- baseline_data %>% 
-#       select(season, Iteration, starts_with("total_Is")) %>% 
+#     result <- baseline_data %>%
+#       select(season, Iteration, starts_with("total_Is")) %>%
 #       left_join(intervention_data, by = c("season", "Iteration")) %>%
 #       mutate(
 #         averted_under5 = total_Is1 - get(paste0("total_Is1_", suffix)),
 #         averted_5_14 = total_Is2 - get(paste0("total_Is2_", suffix)),
 #         averted_15_64 = total_Is3 - get(paste0("total_Is3_", suffix)),
 #         averted_over65 = total_Is4 - get(paste0("total_Is4_", suffix))
-#       ) %>% 
-#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>% 
+#       ) %>%
+#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
 #       group_by(season) %>%
 #       summarize(
 #         averted_under5 = mean(averted_under5, na.rm = TRUE),
@@ -132,7 +132,7 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 #         .groups = 'drop'
 #       )
 #   }
-#   
+# 
 #   return(result)
 # }
 # 
@@ -157,7 +157,7 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 # write_parquet(mean_total_mean_no_vaccination_6mo_immunity, "data/mean_total_mean_no_vaccination_6mo_immunity.parquet")
 # 
 # 
-# ### 
+# ###
 # 
 # run_and_save_scenario(
 #   vaccination_rates = c(target_coverage_under5/days_to_target, 0, 0, 0),
@@ -427,5 +427,5 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 # 
 # write_parquet(mean_averted_under5_over65_vaccination_90_VE, "data/mean_averted_under5_over65_vaccination_90_VE.parquet")
 # 
-# n_iter = 2000
+# # n_iter = 2000
 # 

@@ -128,9 +128,9 @@ prob_data <- results$probability_ce
   
   # Create more descriptive labels
   scenario_colors <- c(
-    "V3 under 5 and 65+" = "#56B4E9",  
-    "V1 under 5" =  "#FFA500",          
-    "V2 65+" = "#22A884FF",
+    "V3" = "#56B4E9",  
+    "V1" =  "#FFA500",          
+    "V2" = "#22A884FF",
     "No Vaccination" = "#440154FF"
   )
   
@@ -140,11 +140,11 @@ prob_data <- prob_data %>%
                  values_to = "Probability") %>% 
     mutate(Intervention = case_when(
       Intervention == "baseline" ~ "No Vaccination",
-      Intervention == "both" ~ "V3 under 5 and 65+",
-      Intervention == "under5" ~ "V1 under 5",
-      Intervention == "over65" ~ "V2 65+"
+      Intervention == "both" ~ "V3",
+      Intervention == "under5" ~ "V1",
+      Intervention == "over65" ~ "V2"
     )) %>%
-    mutate(Intervention = factor(Intervention, levels = c("No Vaccination", "V1 under 5", "V2 65+", "V3 under 5 and 65+"))) 
+    mutate(Intervention = factor(Intervention, levels = c("No Vaccination", "V1", "V2", "V3"))) 
   
 ceac_plot <- prob_data %>% 
     ggplot(aes(x = wtp, y = Probability, color = Intervention)) +
@@ -157,11 +157,11 @@ ceac_plot <- prob_data %>%
     scale_color_manual(values = scenario_colors) +
     theme(
       legend.position = "top",
-      axis.text.x = element_text(size = 12),  # X-axis labels
-      axis.text.y = element_text(size = 12),  # Y-axis labels
-      axis.title.y = element_text(size = 12),  # Y-axis title
-      legend.text = element_text(size = 12),  # Legend labels
-      legend.title = element_text(size = 12),  # Legend title
+      axis.text.x = element_text(size = 14),  # X-axis labels
+      axis.text.y = element_text(size = 14),  # Y-axis labels
+      axis.title.y = element_text(size = 14),  # Y-axis title
+      legend.text = element_text(size = 14),  # Legend labels
+      legend.title = element_text(size = 14),  # Legend title
       plot.title = element_text(hjust = 0.5),
       panel.grid.minor = element_blank()
     ) +
@@ -293,11 +293,11 @@ prob_data_no_aki <- prob_data_no_aki %>%
                values_to = "Probability") %>% 
   mutate(Intervention = case_when(
     Intervention == "baseline" ~ "No Vaccination",
-    Intervention == "both" ~ "V3 under 5 and 65+",
-    Intervention == "under5" ~ "V1 under 5",
-    Intervention == "over65" ~ "V2 65+"
+    Intervention == "both" ~ "V3",
+    Intervention == "under5" ~ "V1",
+    Intervention == "over65" ~ "V2"
   )) %>%
-  mutate(Intervention = factor(Intervention, levels = c("No Vaccination", "V1 under 5", "V2 65+", "V3 under 5 and 65+"))) 
+  mutate(Intervention = factor(Intervention, levels = c("No Vaccination", "V1", "V2", "V3"))) 
 
 ceac_plot_no_aki <- prob_data_no_aki %>% 
   ggplot(aes(x = wtp, y = Probability, color = Intervention)) +
@@ -310,11 +310,11 @@ ceac_plot_no_aki <- prob_data_no_aki %>%
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
-    axis.text.x = element_text(size = 12),  # X-axis labels
-    axis.text.y = element_text(size = 12),  # Y-axis labels
-    axis.title.y = element_text(size = 12),  # Y-axis title
-    legend.text = element_text(size = 12),  # Legend labels
-    legend.title = element_text(size = 12),  # Legend title
+    axis.text.x = element_text(size = 14),  # X-axis labels
+    axis.text.y = element_text(size = 14),  # Y-axis labels
+    axis.title.y = element_text(size = 14),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 14),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +
@@ -376,11 +376,11 @@ ceac_frontier_plot <- ggplot(frontier_data, aes(x = wtp, y = Probability, color 
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
-    axis.text.x = element_text(size = 12),  # X-axis labels
-    axis.text.y = element_text(size = 12),  # Y-axis labels
-    axis.title.y = element_text(size = 12),  # Y-axis title
-    legend.text = element_text(size = 12),  # Legend labels
-    legend.title = element_text(size = 12),  # Legend title
+    axis.text.x = element_text(size = 14),  # X-axis labels
+    axis.text.y = element_text(size = 14),  # Y-axis labels
+    axis.title.y = element_text(size = 14),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 14),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +
@@ -441,11 +441,11 @@ ceac_frontier_plot_no_aki <- ggplot(frontier_data_no_aki, aes(x = wtp, y = Proba
   scale_color_manual(values = scenario_colors) +
   theme(
     legend.position = "top",
-    axis.text.x = element_text(size = 12),  # X-axis labels
-    axis.text.y = element_text(size = 12),  # Y-axis labels
-    axis.title.y = element_text(size = 12),  # Y-axis title
-    legend.text = element_text(size = 12),  # Legend labels
-    legend.title = element_text(size = 12),  # Legend title
+    axis.text.x = element_text(size = 14),  # X-axis labels
+    axis.text.y = element_text(size = 14),  # Y-axis labels
+    axis.title.y = element_text(size = 14),  # Y-axis title
+    legend.text = element_text(size = 14),  # Legend labels
+    legend.title = element_text(size = 14),  # Legend title
     plot.title = element_text(hjust = 0.5),
     panel.grid.minor = element_blank()
   ) +

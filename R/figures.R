@@ -28,7 +28,12 @@ n_iter = 2000
 set.seed(1234)
 
 save_plot <- function(plot, filename) {
-  ggsave(filename, plot, dpi = 300)
+  ggsave(filename, plot, width = 20, height = 12, units = "in", dpi = 300)
+}
+
+
+save_plot_docs <- function(plot, filename) {
+  ggsave(filename, plot, width = 14, height = 10, dpi = 250)  # Medium resolution
 }
 
 save_flextable_as_png <- function(ft, filename, scale = 1, webshot = "webshot2") {
@@ -144,21 +149,22 @@ source("R/06_trajectories_with_uncertainty.R")
 fig_time_series <- annotate_figure(
   ggarrange(
     # First row
-    under5_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1 under 5 cases"),
-    over65_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2 under 5 cases"),
-    under5_over65_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3 under 5 cases"),
+    under5_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1: age group 0-4"),
+    over65_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2: age group 0-4"),
+    under5_over65_vaccination_under5_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3: age group 0-4"),
     # Second row
-    under5_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1 5 to 64 cases"),
-    over65_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2 5 to 64 cases"),
-    under5_over65_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3 5 to 64 cases"),
+    under5_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1: age group 5-64"),
+    over65_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2: age group 5-64"),
+    under5_over65_vaccination_5to64_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3: age group 5-64"),
     # Third row
-    under5_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1 over 65 cases"),
-    over65_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2 over 65 cases"),
-    under5_over65_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3 over 65 cases"),
+    under5_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V1: age group 65+"),
+    over65_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V2: age group 65+"),
+    under5_over65_vaccination_over65_plot + xlab(NULL) + ylab(NULL)+ ggtitle("V3: age group 65+"),
     ncol = 3,
     nrow = 3,
     common.legend = TRUE,
     legend = "none",
+    # labels = c("A)", "B)", "C)"),
     # labels = c("Under 5 vaccination", "Over 65 vaccination", "Combination vaccination"),
     font.label = list(size = 12)
   ),
@@ -170,25 +176,64 @@ fig_time_series <- annotate_figure(
 
 #' ## Percentage of symptomatic cases averted by vaccination scenarios
 
-source("R/07_bar_chart_averted.R")
+source("R/07_bar_chart_averted_by_vaccination.R")
+source("R/07_bar_chart_averted_incidence_by_vaccination.R")
+
+# fig_bar_chart <- annotate_figure(
+#   ggarrange(
+#     averted_cases_under5_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+#     averted_cases_15_64_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+#     averted_cases_over65_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+#     ncol = 3, 
+#     nrow = 1, 
+#     common.legend = TRUE, 
+#     legend = "none",
+#     labels = c("A) Under 5 cases", "B) 5-64 cases", "C) 65+ cases"),
+#     font.label = list(size = 14),
+#     widths = c(1.2, 1.2, 1.2)  # Make each panel wider
+#     # widths = c(1, 1),
+#     # heights = c(1)
+#   ),
+#   bottom = text_grob("Vaccination strategy", size = 14),
+#   left = text_grob("Percentage symptomatic cases averted", rot = 90, size = 14)
+# )
 
 fig_bar_chart <- annotate_figure(
   ggarrange(
-    averted_cases_under5_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
-    averted_cases_15_64_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
-    averted_cases_over65_bar_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    v1_effectiveness_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    v2_effectiveness_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    v3_effectiveness_chart + xlab(NULL) + ylab(NULL) + ggtitle(""), 
     ncol = 3, 
     nrow = 1, 
     common.legend = TRUE, 
     legend = "none",
-    labels = c("A) Under 5 cases", "B) 5-64 cases", "C) 65+ cases"),
+    labels = c("A) V1", "B) V2", "C) V3"),
     font.label = list(size = 14),
     widths = c(1.2, 1.2, 1.2)  # Make each panel wider
     # widths = c(1, 1),
     # heights = c(1)
   ),
-  bottom = text_grob("Vaccination strategy", size = 14),
+  bottom = text_grob("Age groups", size = 14),
   left = text_grob("Percentage symptomatic cases averted", rot = 90, size = 14)
+)
+
+fig_bar_chart_incidence <- annotate_figure(
+  ggarrange(
+    v1_effectiveness_chart_incidence + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    v2_effectiveness_chart_incidence + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    v3_effectiveness_chart_incidence + xlab(NULL) + ylab(NULL) + ggtitle(""), 
+    ncol = 3, 
+    nrow = 1, 
+    common.legend = TRUE, 
+    legend = "none",
+    labels = c("A) V1", "B) V2", "C) V3"),
+    font.label = list(size = 14),
+    widths = c(1.2, 1.2, 1.2)  # Make each panel wider
+    # widths = c(1, 1),
+    # heights = c(1)
+  ),
+  bottom = text_grob("Age groups", size = 14),
+  left = text_grob("Symptomatic cases averted per 1000 population", rot = 90, size = 14)
 )
 
 # ggarrange(fig_time_series + theme(aspect.ratio = 0.5), fig_bar_chart + theme(aspect.ratio = 0.6), ncol = 1, nrow = 2)
@@ -197,10 +242,19 @@ fig_bar_chart <- annotate_figure(
 fig_time_series
 
 save_plot(fig_time_series, "results/fig_time_series.png")
+save_plot_docs(fig_time_series, "results/fig_time_series_docs.png")
 
 fig_bar_chart
 
 ggsave("results/fig_bar_chart.png", fig_bar_chart, width = 12, height = 6, dpi = 300)
+
+
+fig_bar_chart_incidence
+
+save_plot(fig_bar_chart_incidence, "results/fig_bar_chart_incidence.png")
+save_plot_docs(fig_bar_chart_incidence, "results/fig_bar_chart_incidence_docs.png")
+
+ggsave("results/fig_bar_chart_incidence.png", fig_bar_chart, width = 12, height = 6, dpi = 300)
 
 
 #' A. Averted symptomatic cases under 5 B. Averted symptomatic cases between 5 and 64 C. Averted symptomatic cases over 65 
@@ -216,6 +270,12 @@ no_vaccination_incidence_table
 incidence_table
 
 save_flextable_as_png(combined_age_group_total_table, "results/combined_age_group_total_table.png")
+
+#' AKI hospitalisations averted
+
+(no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] - combo_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2]) / no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2]
+
+all_cause_no_vaccination_aki <- no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] 
 
 # ## Total infections averted by vaccination strategy and age group
 
@@ -327,9 +387,12 @@ combined_qaly_table <- combined_qaly_table %>%
   hline(i = c(nrow(table_under5), nrow(table_under5) + nrow(table_over65))) %>%
   # Ensure proper alignment
   align(align = "left", part = "all") %>%
-  align(align = "right", j = 2:ncol(combined_qaly_table), part = "body")
+  align(align = "right", j = 2:ncol(combined_qaly_table), part = "body") %>%
+  theme_booktabs()
 
 combined_qaly_table
+
+save_flextable_as_png(combined_qaly_table, "results/combined_qaly_table_discounted.png")
 
 # save_flextable_as_png(combined_qaly_table, "results/combined_qaly_table.png")
 
@@ -384,9 +447,12 @@ combined_qaly_table_undiscounted <- combined_qaly_table_undiscounted %>%
   hline(i = c(nrow(table_under5_undiscounted), nrow(table_under5_undiscounted) + nrow(table_over65_undiscounted))) %>%
   # Ensure proper alignment
   align(align = "left", part = "all") %>%
-  align(align = "right", j = 2:ncol(combined_qaly_table_undiscounted), part = "body")
+  align(align = "right", j = 2:ncol(combined_qaly_table_undiscounted), part = "body") %>%
+  theme_booktabs()
 
 combined_qaly_table_undiscounted
+
+save_flextable_as_png(combined_qaly_table_undiscounted, "results/combined_qaly_table_undiscounted.png")
 
 #' ## Cost table (discounted) by vaccination scenario
 
@@ -477,9 +543,12 @@ combined_cost_table <- combined_cost_table %>%
   hline(i = c(nrow(cost_table_under5), nrow(cost_table_under5) + nrow(cost_table_over65))) %>%
   # Ensure proper alignment
   align(align = "left", part = "all") %>%
-  align(align = "right", j = 2:ncol(combined_cost_table), part = "body")
+  align(align = "right", j = 2:ncol(combined_cost_table), part = "body") %>%
+  theme_booktabs()
 
 combined_cost_table
+
+save_flextable_as_png(combined_cost_table, "results/combined_cost_table_discounted.png")
 
 #' ## Cost table (undiscounted) by vaccination scenario
 
@@ -530,9 +599,12 @@ combined_cost_table_undiscounted <- combined_cost_table_undiscounted %>%
   hline(i = c(nrow(cost_table_under5_undiscounted), nrow(cost_table_under5_undiscounted) + nrow(cost_table_over65_undiscounted))) %>%
   # Ensure proper alignment
   align(align = "left", part = "all") %>%
-  align(align = "right", j = 2:ncol(combined_cost_table_undiscounted), part = "body")
+  align(align = "right", j = 2:ncol(combined_cost_table_undiscounted), part = "body") %>%
+  theme_booktabs()
 
 combined_cost_table_undiscounted
+
+save_flextable_as_png(combined_cost_table_undiscounted, "results/combined_cost_table_undiscounted.png")
 
 #' ## Cost-effectiveness analysis by vaccination scenario
 
@@ -540,7 +612,7 @@ combined_cost_table_undiscounted
 
 source("R/13_full_incremental_analysis.R")
 
-combined_full_incremental_table
+combined_full_incremental_table 
 
 save_flextable_as_png(combined_full_incremental_table, "results/combined_full_incremental_table.png")
 
@@ -572,6 +644,7 @@ aki_tornado_plot <- annotate_figure(
 aki_tornado_plot
 
 save_plot(aki_tornado_plot, "results/aki_tornado_plot.png")
+save_plot_docs(aki_tornado_plot, "results/aki_tornado_plot_docs.png")
 
 #' A.V1 under 5, average ICER -1651 B. V2 over 65, average ICER -571  C. V3 under 5 and over 65, average ICER -900
 
@@ -597,6 +670,7 @@ no_aki_tornado_plot <- annotate_figure(
 no_aki_tornado_plot
 
 save_plot(no_aki_tornado_plot, "results/no_aki_tornado_plot.png")
+save_plot_docs(no_aki_tornado_plot, "results/no_aki_tornado_plot_docs.png")
 
 #' A.V1 under 5, average ICER 54,243 B. V2 over 65, average ICER 198,429  C. V3 under 5 and over 65, average ICER 136,334
 
@@ -607,26 +681,6 @@ source("R/18_cea_probabilistic_analysis.R")
 
 #' ## Cost-ffectivness plane
 
-cea_plot <- annotate_figure(
-  ggarrange(
-    cea_plane + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.3, legend.title = element_text(size = 14), legend.text = element_text(size = 12)), 
-    cea_plane_no_aki + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.3, legend.title = element_text(size = 14), legend.text = element_text(size = 12)), 
-    ncol = 2, 
-    nrow = 1, 
-    common.legend = TRUE, 
-    labels = c("A", "B"),
-    font.label = list(size = 12),
-    # label.y = 1.05,
-    # label.x = c(0.65, 0.65),  # Reduced x values to move labels left
-    widths = c(1, 1),
-    heights = c(1)
-  ),
-  bottom = text_grob("Incremental QALYs"),
-  left = text_grob("Incremental costs (£)", rot = 90)
-)
-
-cea_plot
-
 cea_plot <- ggarrange(
   # First plot with full axis titles
   cea_plane + 
@@ -635,7 +689,7 @@ cea_plot <- ggarrange(
     theme(
       aspect.ratio = 1.3, 
       legend.title = element_text(size = 14), 
-      legend.text = element_text(size = 12),
+      legend.text = element_text(size = 14),
       axis.title.x = element_text(margin = margin(t = 5)),
       axis.title.y = element_text(margin = margin(r = 5))
     ),
@@ -656,14 +710,17 @@ cea_plot <- ggarrange(
   nrow = 1, 
   common.legend = TRUE, 
   labels = c("A", "B"),
-  font.label = list(size = 12),
+  font.label = list(size = 14),
   label.y = 0.95,
   label.x = c(0.1, 0.1),
   widths = c(1, 1),
   heights = c(1)
 )
 
+cea_plot
+
 save_plot(cea_plot, "results/cea_plot.png")
+save_plot_docs(cea_plot, "results/cea_plot_docs.png")
 
 #' cea plot percentages
 
@@ -717,6 +774,7 @@ inmb_plot <- annotate_figure(
 inmb_plot
 
 save_plot(inmb_plot, "results/inmb_plot.png")
+save_plot_docs(inmb_plot, "results/inmb_plot_docs.png")
 
 #' ## Cost-effective acceptibility curve and Expected value of perfect information
 
@@ -724,12 +782,12 @@ source("R/20_ceac_plot.R")
 source("R/21_evpi_function.R")
 
 ceac_combined_plot <- ggarrange(
-  ceac_plot + xlab(NULL),
-  ceac_plot_no_aki + xlab(NULL) + ylab(NULL),
-  ceac_frontier_plot + xlab(NULL),
-  ceac_frontier_plot_no_aki + xlab(NULL) + ylab(NULL),
-  evpi_plot,
-  evpi_plot_no_aki + ylab(NULL),
+  ceac_plot + xlab(NULL) + theme(aspect.ratio = 0.35),
+  ceac_plot_no_aki + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 0.35),
+  ceac_frontier_plot + xlab(NULL) + theme(aspect.ratio = 0.35),
+  ceac_frontier_plot_no_aki + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 0.35),
+  evpi_plot + theme(aspect.ratio = 0.35),
+  evpi_plot_no_aki + ylab(NULL) + theme(aspect.ratio = 0.35),
   ncol = 2,
   nrow = 3,
   common.legend = TRUE, 
@@ -739,7 +797,9 @@ ceac_combined_plot <- ggarrange(
 
 ceac_combined_plot
 
+
 save_plot(ceac_combined_plot, "results/ceac_combined_plot.png")
+save_plot_docs(ceac_combined_plot, "results/ceac_combined_plot_docs.png")
 
 
 prob_data |> 
@@ -781,6 +841,8 @@ incremental_threshold
 # save_plot(threshold_analysis_plot, "results/threshold_analysis_plot.png")
 
 save_plot(incremental_threshold, "results/incremental_threshold.png")
+save_plot_docs(incremental_threshold, "results/incremental_threshold_docs.png")
+
 
 #' Theshold analysis A. V1 under 5 B. V2 over 65 C. V3 under 5 and 65+
 
@@ -803,5 +865,9 @@ annotate_figure(
 )
 
 vaccine_cost_threshold
+
+save_plot(vaccine_cost_threshold, "results/vaccine_cost_threshold.png")
+save_plot_docs(vaccine_cost_threshold, "results/vaccine_cost_threshold_docs.png")
+
 
 #' Theshold analysis A. V1 under 5 B. V2 over 65 C. V3 under 5 and 65+

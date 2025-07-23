@@ -1,6 +1,6 @@
 # probabilistic sensitivity analysis
 
-source("R/reference_costs.R")
+# source("R/reference_costs.R")
 # source("R/annualise_data.R")
 # source("R/probabilistic_discounting_function.R")
 # source("R/probabilistic_cea_function.R")
@@ -86,9 +86,9 @@ no_aki_over65_prob_results_table <- data.frame(no_aki_over65_prob_results$raw_re
  # Define the maximum acceptable ICER
 
 scenario_colors <- c(
-  "V3 under 5 and 65+" = "#56B4E9",  
-  "V1 under 5" =  "#FFA500",          
-  "V2 65+" = "#22A884FF"          
+  "V3" = "#56B4E9",  
+  "V1" =  "#FFA500",          
+  "V2" = "#22A884FF"          
 )
 
 max_icer <- 20000
@@ -103,14 +103,14 @@ cea_mean <- under5_over65_prob_results_table %>%
 cea_plane <-  under5_over65_prob_results_table %>% 
   rbind(under5_prob_results_table, over65_prob_results_table) %>% 
   mutate(strategy = case_when(
-    strategy == "Under 5 & Over 65" ~ "V3 under 5 and 65+",
-    strategy == "Under 5" ~ "V1 under 5",
-    strategy == "Over 65" ~ "V2 65+"
+    strategy == "Under 5 & Over 65" ~ "V3",
+    strategy == "Under 5" ~ "V1",
+    strategy == "Over 65" ~ "V2"
   )) %>% 
   mutate(strategy = factor(strategy, 
-                           levels = c("V1 under 5", 
-                                      "V2 65+", 
-                                      "V3 under 5 and 65+"))) %>% 
+                           levels = c("V1", 
+                                      "V2", 
+                                      "V3"))) %>% 
   ggplot(aes(x = qaly_gain/1000000, y = incr_cost/1000000)) +
   geom_point(aes(color = factor(strategy)), size = 3, alpha = 0.5) +
   geom_point(data = cea_mean, aes(x = qaly_gain, y = incr_cost), size = 5, alpha = 1.0, shape = 4, stroke = 1.5) +
@@ -124,15 +124,16 @@ cea_plane <-  under5_over65_prob_results_table %>%
   scale_color_manual( 
     values = scenario_colors,
     labels = c(
-      "V3 under 5 and 65+" = "V3 under 5 and 65+",
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+"
+      "V3" = "V3",
+      "V1" = "V1",
+      "V2" = "V2"
     )
   ) +
   theme(legend.position = "bottom",
         axis.text.x = element_text(size = 14),  # X-axis labels
         axis.text.y = element_text(size = 14),  # Y-axis labels
         axis.title.y = element_text(size = 16),  # Y-axis title
+        axis.title.x = element_text(size = 16),  # X-axis title
         legend.text = element_text(size = 14),  # Legend labels
         legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
@@ -145,14 +146,14 @@ cea_plane <-  under5_over65_prob_results_table %>%
 cea_plane <-  under5_over65_prob_results_table %>% 
   rbind(under5_prob_results_table, over65_prob_results_table) %>% 
   mutate(strategy = case_when(
-    strategy == "Under 5 & Over 65" ~ "V3 under 5 and 65+",
-    strategy == "Under 5" ~ "V1 under 5",
-    strategy == "Over 65" ~ "V2 65+"
+    strategy == "Under 5 & Over 65" ~ "V3",
+    strategy == "Under 5" ~ "V1",
+    strategy == "Over 65" ~ "V2"
   )) %>% 
   mutate(strategy = factor(strategy, 
-                           levels = c("V1 under 5", 
-                                      "V2 65+", 
-                                      "V3 under 5 and 65+"))) %>% 
+                           levels = c("V1", 
+                                      "V2", 
+                                      "V3"))) %>% 
   ggplot(aes(x = qaly_gain/1000000, y = incr_cost/1000000)) +
   geom_point(aes(color = factor(strategy), shape = factor(strategy)), size = 3, alpha = 0.5) +
   geom_point(data = cea_mean, aes(x = qaly_gain, y = incr_cost), size = 5, alpha = 1.0, shape = 4, stroke = 1.5) +
@@ -167,23 +168,24 @@ cea_plane <-  under5_over65_prob_results_table %>%
   scale_color_manual( 
     values = scenario_colors,
     labels = c(
-      "V3 under 5 and 65+" = "V3 under 5 and 65+",
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+"
+      "V3" = "V3",
+      "V1" = "V1",
+      "V2" = "V2"
     )
   ) +
   scale_shape_manual(  # Added shape scale
     values = c(15, 16, 17),  # Circle, triangle, square
     labels = c(
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+",
-      "V3 under 5 and 65+" = "V3 under 5 and 65+"
+      "V1" = "V1",
+      "V2" = "V2",
+      "V3" = "V3"
     )
   ) +
   theme(legend.position = "bottom",
         axis.text.x = element_text(size = 14),  # X-axis labels
         axis.text.y = element_text(size = 14),  # Y-axis labels
         axis.title.y = element_text(size = 16),  # Y-axis title
+        axis.title.x = element_text(size = 16),  # X-axis title
         legend.text = element_text(size = 14),  # Legend labels
         legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
@@ -206,14 +208,14 @@ cea_mean_no_aki <- no_aki_under5_prob_results_table %>%
 cea_plane_no_aki <- no_aki_under5_prob_results_table %>% 
   rbind(no_aki_over65_prob_results_table, no_aki_under5_over65_prob_results_table) %>% 
   mutate(strategy = case_when(
-    strategy == "Under 5 & Over 65" ~ "V3 under 5 and 65+",
-    strategy == "Under 5" ~ "V1 under 5",
-    strategy == "Over 65" ~ "V2 65+"
+    strategy == "Under 5 & Over 65" ~ "V3",
+    strategy == "Under 5" ~ "V1",
+    strategy == "Over 65" ~ "V2"
   )) %>% 
   mutate(strategy = factor(strategy, 
-                           levels = c("V1 under 5", 
-                                      "V2 65+", 
-                                      "V3 under 5 and 65+"))) %>% 
+                           levels = c("V1", 
+                                      "V2", 
+                                      "V3"))) %>% 
   ggplot(aes(x = qaly_gain/10000, y = incr_cost/10000)) +
   geom_point(aes(color = factor(strategy), shape = factor(strategy)), size = 3, alpha = 0.5) +
   geom_point(data = cea_mean_no_aki, aes(x = qaly_gain, y = incr_cost), size = 5, alpha = 1.0, shape = 4, stroke = 1.5) +
@@ -228,23 +230,24 @@ cea_plane_no_aki <- no_aki_under5_prob_results_table %>%
   scale_color_manual( 
     values = scenario_colors,
     labels = c(
-      "V3 under 5 and 65+" = "V3 under 5 and 65+",
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+"
+      "V3" = "V3",
+      "V1" = "V1",
+      "V2" = "V2"
     )
   ) +
   scale_shape_manual(  # Added shape scale
     values = c(15, 16, 17),  # Square, circle, triangle - same as first plot
     labels = c(
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+",
-      "V3 under 5 and 65+" = "V3 under 5 and 65+"
+      "V1" = "V1",
+      "V2" = "V2",
+      "V3" = "V3"
     )
   ) +
   theme(legend.position = "bottom",
         axis.text.x = element_text(size = 14),  # X-axis labels
         axis.text.y = element_text(size = 14),  # Y-axis labels
         axis.title.y = element_text(size = 16),  # Y-axis title
+        axis.title.x = element_text(size = 16),  # X-axis title
         legend.text = element_text(size = 14),  # Legend labels
         legend.title = element_text(size = 16),  # Legend title
         panel.grid.major = element_line(color = "gray90"),
@@ -262,14 +265,14 @@ plot_data_both <- under5_over65_prob_results_table %>%
   rbind(over65_prob_results_table, under5_prob_results_table, no_aki_under5_over65_prob_results_table, no_aki_under5_prob_results_table, no_aki_over65_prob_results_table) %>% 
   mutate(incr_cost = incr_cost/100000, qaly_gain = qaly_gain/100000) %>% 
   mutate(strategy = case_when(
-    strategy == "Under 5 & Over 65" ~ "Vaccinating under 5 and 65+",
+    strategy == "Under 5 & Over 65" ~ "Vaccinating both",
     strategy == "Under 5" ~ "Vaccinating under 5",
-    strategy == "Over 65" ~ "Vaccinating 65+"
+    strategy == "Over 65" ~ "Vaccinating over 65"
   )) %>% 
   mutate(strategy = factor(strategy, 
                            levels = c("Vaccinating under 5", 
-                                      "Vaccinating 65+", 
-                                      "Vaccinating under 5 and 65+")))
+                                      "Vaccinating over 65", 
+                                      "Vaccinating both")))
 
 cea_plane_both <- plot_data_both %>% 
   ggplot(aes(x = qaly_gain, y = incr_cost)) +
@@ -284,9 +287,9 @@ cea_plane_both <- plot_data_both %>%
   scale_color_manual( 
     values = scenario_colors,
     labels = c(
-      "Vaccinating under 5 and 65+" = "Vaccinating under 5 and 65+",
-      "Vaccinating under 5" = "Vaccinating under 5",
-      "Vaccinating 65+" = "Vaccinating 65+"
+      "Vaccinating both" = "Vaccinating both",
+      "Vaccinating over 65" = "Vaccinating over 65",
+      "Vaccinating under 5" = "Vaccinating under 5"
     )
   ) +
   theme(legend.position = "bottom",
@@ -302,5 +305,5 @@ cea_plane_both <- plot_data_both %>%
   scale_y_continuous(labels = scales::comma, 
                      expand = expansion(mult = 0.1))
 
-cea_plane_both
+# cea_plane_both
 

@@ -29,7 +29,7 @@ for (i in seq_along(aki_values)) {
 }
 
 threshold_under5_over65_df <- threshold_under5_over65_df %>%
-  mutate(strategy = "V3 under 5 and 65+")
+  mutate(strategy = "V3")
 
 #######################
 #######################
@@ -59,7 +59,7 @@ for (i in seq_along(aki_values)) {
 
 }
 
-threshold_under5_df <- threshold_under5_df %>% mutate(strategy = "V1 under 5")
+threshold_under5_df <- threshold_under5_df %>% mutate(strategy = "V1")
 
 
 #######################
@@ -90,7 +90,7 @@ for (i in seq_along(aki_values)) {
 
 }
 
-threshold_over65_df <- threshold_over65_df %>% mutate(strategy = "V2 65+")
+threshold_over65_df <- threshold_over65_df %>% mutate(strategy = "V2")
 
 
 # plot
@@ -166,7 +166,7 @@ threshold_over65_plot <- threshold_analysis_plot(threshold_over65_df)
 ############################################################################################
 
 # Create sequence of values
-vaccine_cost_values <- seq(0, 500, by = 50)
+vaccine_cost_values <- seq(0, 500, by = 10)
 
 #######################
 #######################
@@ -196,7 +196,7 @@ for (i in seq_along(vaccine_cost_values)) {
 
 }
 
-vaccine_threshold_under5_over65_df <- vaccine_threshold_under5_over65_df %>% mutate(strategy = "V3 under 5 and 65+")
+vaccine_threshold_under5_over65_df <- vaccine_threshold_under5_over65_df %>% mutate(strategy = "V3")
 
 #######################
 #######################
@@ -225,7 +225,7 @@ for (i in seq_along(vaccine_cost_values)) {
 
 }
 
-vaccine_threshold_under5_df <- vaccine_threshold_under5_df %>% mutate(strategy = "V1 under 5")
+vaccine_threshold_under5_df <- vaccine_threshold_under5_df %>% mutate(strategy = "V1")
 
 #######################
 #######################
@@ -254,7 +254,7 @@ for (i in seq_along(vaccine_cost_values)) {
 
 }
 
-vaccine_threshold_over65_df <- vaccine_threshold_over65_df %>% mutate(strategy = "V2 65+")
+vaccine_threshold_over65_df <- vaccine_threshold_over65_df %>% mutate(strategy = "V2")
 
 
 # plot
@@ -321,7 +321,7 @@ vaccine_cost_threshold <- vaccine_threshold_under5_over65_df %>%
   ggplot(aes(x = vaccine_cost_values, y = result, colour = strategy, linetype = strategy)) +
   annotate("rect", 
            xmin = -Inf, xmax = Inf,
-           ymin = -20000, ymax = 60000,
+           ymin = 13000, ymax = 30000,
            fill = "grey80",
            alpha = 0.3) +
   # Add main line with improved aesthetics
@@ -442,7 +442,7 @@ full_incr_threshold_df <- full_incr_threshold_under5_over65_df %>%
     incr_cost_diff = incr_cost_under_over65 - incr_cost_under5,
     qaly_gain_diff = qaly_gain_under_over65 - qaly_gain_under5,
     result = incr_cost_diff / qaly_gain_diff,
-    strategy = "Incremental threshold V3 vs V1"
+    strategy = "Incremental V3 vs V1"
   ) %>% 
   select(aki_value, result, strategy)
 
@@ -450,15 +450,16 @@ full_incr_threshold_plot <- threshold_analysis_plot(full_incr_threshold_df)
 
 
 scenario_colors_threshold <- c(
-  "V3 under 5 and 65+" = "#56B4E9",  
-  "V1 under 5" =  "#FFA500",          
-  "V2 65+" = "#22A884FF",
-  "Incremental threshold V3 vs V1" = "#440154FF")
+  "V3" = "#56B4E9",  
+  "V1" =  "#FFA500",          
+  "V2" = "#22A884FF",
+  "Incremental V3 vs V1" = "#440154FF")
 
 incremental_threshold <- threshold_under5_over65_df %>%
   rbind(threshold_under5_df, threshold_over65_df, full_incr_threshold_df) %>%
   filter(aki_value <= 0.30)  %>%
-  ggplot(aes(x = aki_value, y = result, colour = strategy, linetype = strategy)) +
+  rename(Strategy = strategy) %>%
+  ggplot(aes(x = aki_value, y = result, colour = Strategy, linetype = Strategy)) +
   annotate("rect", 
            xmin = -Inf, xmax = Inf,
            ymin = 13000, ymax = 30000,
@@ -503,8 +504,8 @@ incremental_threshold <- threshold_under5_over65_df %>%
   ) +
   scale_y_continuous(
     labels = scales::comma_format(),
-    breaks = seq(-20000, 320000, by = 40000),
-    limits = c(-20000, 320000)
+    breaks = seq(-20000, 350000, by = 50000),
+    limits = c(-20000, 350000)
   ) +
   scale_colour_manual(values = scenario_colors_threshold) +
   # Add different line types for each strategy

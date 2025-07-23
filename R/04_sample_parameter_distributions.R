@@ -1,3 +1,9 @@
+### refrence costs to sample
+
+source("R/reference_costs.R")
+
+###
+
 parameter_probabilistic_sampling <- function(n_iter = 100,
                                              # seasonality parameters
                                              # season_amp_over65_mean = 1.46, season_amp_over65_sd = 0.2,
@@ -38,13 +44,13 @@ parameter_probabilistic_sampling <- function(n_iter = 100,
                                              qaly_norovirus_alpha = qaly_norovirus_alpha, qaly_norovirus_beta = qaly_norovirus_beta,
                                              qaly_aki_alpha = qaly_aki_alpha, qaly_aki_beta = qaly_aki_beta,
                                              # Costs lognormal parameters
-                                             cost_gp_mean = 49, cost_gp_sd = 7.35,
-                                             cost_norovirus_1_mean = 1045, cost_norovirus_1_sd = 779,
-                                             cost_norovirus_2_mean = 1749, cost_norovirus_2_sd = 2157,
-                                             cost_aki_mean = 3730, cost_aki_sd = 2132,
+                                             cost_gp_mean = cost_per_noro_gp_attendance_episode, cost_gp_sd = 6.41,
+                                             cost_norovirus_1_mean = cost_per_child_noro_hospitalisation_episode, cost_norovirus_1_sd = 535*inflate_to_2022_2023,
+                                             cost_norovirus_2_mean = cost_per_adult_noro_hospitalisation_episode, cost_norovirus_2_sd = 1623*inflate_to_2022_2023,
+                                             cost_aki_mean = cost_per_aki_hospitalisation_episode, cost_aki_sd = 1469*inflate_to_2022_2023,
                                              # cost_per_dose_mean = 35, cost_per_dose_sd = 20,
-                                             admin_cost_per_dose_1_mean = 18.20, admin_cost_per_dose_1_sd = 4.15,
-                                             admin_cost_per_dose_2_mean = 14.05, admin_cost_per_dose_2_sd = 3.39
+                                             admin_cost_per_dose_1_mean = admin_cost_per_dose_children, admin_cost_per_dose_1_sd = admin_cost_per_dose_children_sd,
+                                             admin_cost_per_dose_2_mean = admin_cost_per_dose_adult, admin_cost_per_dose_2_sd = admin_cost_per_dose_adult_sd
 ) {
   
   # Helper functions
@@ -120,7 +126,7 @@ parameter_probabilistic_sampling <- function(n_iter = 100,
   })
   names(seasonality_parameters_prob) <- names(params$seasonality_parameters)
   
-  # Calculate probabilistic infection parameters using normal distribution
+  # Calculate probabilistic infection parameters
   infection_parameters_prob <- lapply(seq_along(params$infection_parameters), function(i) {
   qbeta(LHS_samples[, i + 2],
         shape1 = params$infection_parameters[[i]]["alpha"],

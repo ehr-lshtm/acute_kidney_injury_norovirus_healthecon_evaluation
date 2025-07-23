@@ -63,36 +63,36 @@ inmb_long <- inmb_df %>%
   pivot_longer(cols = c(inmb_over65, inmb_under5, inmb_under5_over65),
                names_to = "strategy", values_to = "inmb") %>% 
   mutate(strategy = case_when(
-    strategy == "inmb_over65" ~ "V2 65+",
-    strategy == "inmb_under5" ~ "V1 under 5",
-    strategy == "inmb_under5_over65" ~ "V3 under 5 and 65+"
+    strategy == "inmb_over65" ~ "V2",
+    strategy == "inmb_under5" ~ "V1",
+    strategy == "inmb_under5_over65" ~ "V3"
   )) %>% 
   mutate(strategy = factor(strategy, 
-                           levels = c("V1 under 5", 
-                                      "V2 65+", 
-                                      "V3 under 5 and 65+")))
+                           levels = c("V1", 
+                                      "V2", 
+                                      "V3")))
 
 
 no_aki_inmb_long <- inmb_no_aki_df %>%
   pivot_longer(cols = c(no_aki_inmb_over65, no_aki_inmb_under5, no_aki_inmb_under5_over65),
                names_to = "strategy", values_to = "inmb") %>% 
   mutate(strategy = case_when(
-    strategy == "no_aki_inmb_over65" ~ "V2 65+", 
-    strategy == "no_aki_inmb_under5" ~ "V1 under 5",
-    strategy == "no_aki_inmb_under5_over65" ~ "V3 under 5 and 65+"
+    strategy == "no_aki_inmb_over65" ~ "V2", 
+    strategy == "no_aki_inmb_under5" ~ "V1",
+    strategy == "no_aki_inmb_under5_over65" ~ "V3"
   )) %>% 
   mutate(strategy = factor(strategy, 
-                           levels = c("V1 under 5", 
-                                      "V2 65+", 
-                                      "V3 under 5 and 65+")))
+                           levels = c("V1", 
+                                      "V2", 
+                                      "V3")))
 
 
 # define colours
 
 scenario_colors <- c(
-  "V3 under 5 and 65+" = "#56B4E9",  
-  "V1 under 5" =  "#FFA500",          
-  "V2 65+" = "#22A884FF"          
+  "V3" = "#56B4E9",  
+  "V1" =  "#FFA500",          
+  "V2" = "#22A884FF"          
 )
 
 inmb_plot <- ggplot(inmb_long, aes(x = wtp, y = inmb, color = strategy)) +
@@ -100,9 +100,9 @@ inmb_plot <- ggplot(inmb_long, aes(x = wtp, y = inmb, color = strategy)) +
   scale_color_manual(
     values = scenario_colors,
     labels = c(
-      "V3 under 5 and 65+" = "V3 under 5 and 65+",
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+"
+      "V3" = "V3",
+      "V1" = "V1",
+      "V2" = "V2"
     )
   ) +
   theme_minimal() +
@@ -130,9 +130,9 @@ no_aki_inmb_plot <- ggplot(no_aki_inmb_long, aes(x = wtp, y = inmb, color = stra
   scale_color_manual(
     values = scenario_colors,
     labels = c(
-      "V3 under 5 and 65+" = "V3 under 5 and 65+",
-      "V1 under 5" = "V1 under 5",
-      "V2 65+" = "V2 65+"
+      "V3" = "V3",
+      "V1" = "V1",
+      "V2" = "V2"
     )
   ) +
   theme_minimal() +

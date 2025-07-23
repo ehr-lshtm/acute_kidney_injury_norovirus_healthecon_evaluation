@@ -17,6 +17,9 @@ find_beta_parameters_dist <- function(mean_val, ci_lower, ci_upper) {
   return(list(alpha=alpha, beta=beta))
 }
 
+### cost inflation
+
+inflate_to_2022_2023 <- 1.073 # inflation based on provisional 2022/2023 NHS cost inflation index 
 
 # Example usage for sample data:
 posterior_samples <-traceBurnThin_df$aki_hospitalisation_4  # simulate some data
@@ -116,6 +119,7 @@ print(paste("Alpha:", round(parameters_dist$alpha, 1)))
 print(paste("Beta:", round(parameters_dist$beta, 1)))
 
 ######### Norovirus hospitalisation 5-14
+
 
 # Example usage for sample data:
 mean_val <- 0.4/1000
@@ -290,8 +294,8 @@ print(paste("Beta:", round(parameters_dist$beta, 1)))
 ######### QALY distributions aki hospitalisation
 
 # Example usage for sample data:
-mean_val <- 1-0.676
-ci <- c(1-1, 1-0.520)
+mean_val <- 0.826-0.676
+ci <- c(1-1, 0.812-0.520)
 mean_val = (mean_val/365)*12 # QALY loss per episode with duration of 12 days
 ci = (ci/365)*12
 
@@ -345,6 +349,7 @@ print(paste("Beta:", round(parameters_dist$beta, 1)))
 
 posterior_samples <-traceBurnThin_df$D_immun  # simulate some data
 mean_val <- mean(posterior_samples)
+ci <- quantile(posterior_samples, c(0.025, 0.975))
 sd_val <- stats::sd(posterior_samples)
 
 D_immun_mean <- mean_val
@@ -354,6 +359,7 @@ D_immun_sd <- sd_val
 
 posterior_samples <- traceBurnThin_df$season_offset*100  # simulate some data
 mean_val <- mean(posterior_samples)
+ci <- quantile(posterior_samples, c(0.025, 0.975))
 sd_val <- stats::sd(posterior_samples)
 
 season_offset_mean <- mean_val
@@ -363,6 +369,7 @@ season_offset_sd <- sd_val
 
 posterior_samples <- traceBurnThin_df$season_amp*100  # simulate some data
 mean_val <- mean(posterior_samples)
+ci <- quantile(posterior_samples, c(0.025, 0.975))
 sd_val <- stats::sd(posterior_samples)
 
 season_amp_mean <- mean_val

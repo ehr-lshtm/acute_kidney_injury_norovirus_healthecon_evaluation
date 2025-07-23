@@ -82,6 +82,7 @@ params[["contacts"]] <- uk_contact_rate_matrix
 params[["season_offset"]] <- rep(0.5, length(params[["season_offset"]]))
 #params[["vacc_start"]] <- 3535
 params[["vacc_start"]] <- 1460
+params[["rho"]] <- 0.05
 
 # updated parameters based on fitting data
 params[["season_amp_over65"]] <- 1

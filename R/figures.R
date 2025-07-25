@@ -254,7 +254,7 @@ fig_bar_chart_incidence
 save_plot(fig_bar_chart_incidence, "results/fig_bar_chart_incidence.png")
 save_plot_docs(fig_bar_chart_incidence, "results/fig_bar_chart_incidence_docs.png")
 
-ggsave("results/fig_bar_chart_incidence.png", fig_bar_chart, width = 12, height = 6, dpi = 300)
+ggsave("results/fig_bar_chart_incidence.png", fig_bar_chart_incidence, width = 12, height = 6, dpi = 300)
 
 
 #' A. Averted symptomatic cases under 5 B. Averted symptomatic cases between 5 and 64 C. Averted symptomatic cases over 65 
@@ -273,9 +273,13 @@ save_flextable_as_png(combined_age_group_total_table, "results/combined_age_grou
 
 #' AKI hospitalisations averted
 
-(no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] - combo_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2]) / no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2]
-
-all_cause_no_vaccination_aki <- no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] 
+all_cause_aki <- 696362
+no_vaccination_aki <- no_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] / 10
+combo_vaccination_aki <- combo_vaccination_total_health_outcomes$total_over65_summary_stats_raw[6,2] /10
+aki_hospitalisations_averted <- (no_vaccination_aki - combo_vaccination_aki) / no_vaccination_aki
+all_cause_aki_averted <- ((no_vaccination_aki - combo_vaccination_aki) / all_cause_aki)
+aki_hospitalisations_averted
+all_cause_aki_averted
 
 # ## Total infections averted by vaccination strategy and age group
 
@@ -637,8 +641,8 @@ aki_tornado_plot <- annotate_figure(
     widths = c(1, 1),
     heights = c(1)
   ),
-  bottom = text_grob("Change in ICER (£/QALY)"),
-  left = text_grob("Parameters", rot = 90)
+  bottom = text_grob("Change in ICER (£/QALY)", size = 16),
+  left = text_grob("Parameters", rot = 90, size = 16)
 )
 
 aki_tornado_plot
@@ -759,16 +763,16 @@ source("R/19_inmb_plot.R")
  
 inmb_plot <- annotate_figure(
   ggarrange(
-    inmb_plot + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.8), 
-    no_aki_inmb_plot + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.8), 
+    inmb_plot + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.3), 
+    no_aki_inmb_plot + xlab(NULL) + ylab(NULL) + theme(aspect.ratio = 1.3), 
     ncol = 2, 
     nrow = 1, 
     common.legend = TRUE, 
     labels = c("A", "B"),
-    font.label = list(size = 12)
+    font.label = list(size = 14)
   ),
-  bottom = text_grob("Willingness to pay (£/QALY)"),
-  left = text_grob("Average incremental net monetary benefit (INMB)", rot = 90)
+  bottom = text_grob("Willingness to pay (£/QALY)", size = 14),
+  left = text_grob("Average incremental net monetary benefit (millions GBP)", rot = 90, size = 14)
 )
 
 inmb_plot

@@ -36,8 +36,9 @@ create_tornado_plot <- function(tornado_data, plot_title, y_min = -5000, y_max =
       plot.title = element_text(size = 14, face = "bold"),
       axis.text.y = element_text(size = 14),
       axis.text.x = element_text(size = 14),
-      axis.title = element_text(size = 14),
-      legend.text = element_text(size = 14)  # Legend labels
+      axis.title = element_text(size = 16),
+      legend.title = element_text(size = 16),  # Legend title
+      legend.text = element_text(size = 16)  # Legend labels
     ) +
     geom_hline(yintercept = 0, linetype = "dashed", color = "gray50") +
     scale_y_continuous(

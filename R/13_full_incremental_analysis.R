@@ -97,10 +97,10 @@ no_aki_part_1 <- no_aki_cea_under5_summary %>%
   select(metric, A, B, C, BvA, CvB, CvA) %>% 
   pivot_longer(cols = -metric, names_to = "scenario", values_to = "value") %>% 
   pivot_wider(names_from = metric, values_from = value) %>% 
-  filter(scenario == "BvA" | scenario == "CvB") %>% 
+  filter(scenario == "BvA" | scenario == "CvA") %>% 
   select(scenario, ICER_mean) %>% 
   mutate(scenario = case_when(scenario == "BvA" ~ "B",
-                              scenario == "CvB" ~ "C")) %>% 
+                              scenario == "CvA" ~ "C")) %>% 
   rename(Incremental_cost_effectiveness_ratio = ICER_mean)
 
 no_aki_part_2 <- no_aki_cea_under5_summary %>% 
@@ -310,15 +310,15 @@ combined_full_incremental_table <- with_aki_part_3 %>%
   rename(
     "Acute kidney injury\noutcomes" = scenario,
     "Net cost (£ million )" = `Incremental Cost`,
-    "Total QALYs gained (million)" = `QALY Gain`,
-    "Net monetary benefit\n(£ million)" = `INMB`,
+    "Total QALYs\ngained (million)" = `QALY Gain`,
+    "Net monetary\nbenefit(£ million)" = `INMB`,
     "Average incremental\ncost-effectiveness\nratio (£/QALY)" = ICER_mean,
     "Incremental\ncost-effectiveness\nratio (£/QALY)" = Incremental_cost_effectiveness_ratio
   ) %>% 
   flextable::flextable() %>%
-  width(width = c(1.0, 0.5, 2.0, 1.5, 2.0, 2.0, 2.0)) %>%
+  width(width = c(1.1, 0.5, 1.6, 1.3, 1.8, 2.1, 2.1)) %>%
   theme_zebra() %>%
-  fontsize(size = 10, part = "all") %>%
+  fontsize(size = 11, part = "all") %>%
   bold(i = c(1, nrow(with_aki_part_3) + 2)) %>%
   padding(padding = 3, part = "all") %>%
   hline(i = c(nrow(with_aki_part_3)+1)) %>%

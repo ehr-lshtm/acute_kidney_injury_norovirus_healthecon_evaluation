@@ -5,6 +5,14 @@ aki_values <- seq(0, 0.3, by = 0.005)
 #######################
 #######################
 
+
+scenario_colors_threshold <- c(
+  "V3" = "#56B4E9",  
+  "V1" =  "#FFA500",          
+  "V2" = "#22A884FF",
+  "Incremental V3 vs V1" = "#440154FF")
+
+
 # Initialize an empty data frame to store results
 threshold_under5_over65_df <- data.frame()
 
@@ -337,18 +345,18 @@ vaccine_cost_threshold <- vaccine_threshold_under5_over65_df %>%
   # Enhanced theme
   theme_minimal() +
   theme(
-    axis.title = element_text(size = 12),
-    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 14),
+    axis.text = element_text(size = 14),
     # Add more spacing between title and text
-    axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0)),
-    axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0), size = 16),
+    axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0), size = 16),
     panel.grid.minor = element_line(color = "grey95"),  # Make minor grid lines lighter
     panel.grid.major = element_line(color = "grey90"),
     plot.caption = element_text(size = 8, color = "grey40"),
     plot.margin = margin(t = 20, r = 20, b = 20, l = 20),
     legend.position = "top",  # Legend at top
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 14),
+    legend.text = element_text(size = 14),
     # Improve legend spacing and layout
     legend.margin = margin(b = 15), # Add space below the legend
     legend.key.width = unit(2, "cm") # Make the legend keys wider to show line styles better
@@ -448,13 +456,6 @@ full_incr_threshold_df <- full_incr_threshold_under5_over65_df %>%
 
 full_incr_threshold_plot <- threshold_analysis_plot(full_incr_threshold_df)
 
-
-scenario_colors_threshold <- c(
-  "V3" = "#56B4E9",  
-  "V1" =  "#FFA500",          
-  "V2" = "#22A884FF",
-  "Incremental V3 vs V1" = "#440154FF")
-
 incremental_threshold <- threshold_under5_over65_df %>%
   rbind(threshold_under5_df, threshold_over65_df, full_incr_threshold_df) %>%
   filter(aki_value <= 0.30)  %>%
@@ -473,23 +474,23 @@ incremental_threshold <- threshold_under5_over65_df %>%
   geom_point(color = "#2C3E50", size = 1) +
   # Improve labels
   labs(
-    x = "Norovirus attributable AKI hospitalisation rate in over 65s",
+    x = "Norovirus linked AKI hospitalisation proportion in over 65s",
     y = "Average incremental cost-effectiveness ratio (ICER)") +
   # Enhanced theme
   theme_minimal() +
   theme(
-    axis.title = element_text(size = 12),
-    axis.text = element_text(size = 12),
+    axis.title = element_text(size = 16),
+    axis.text = element_text(size = 16),
     # Add more spacing between title and text
-    axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0)),
-    axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0)),
+    axis.title.x = element_text(margin = margin(t = 15, r = 0, b = 0, l = 0), size = 16),
+    axis.title.y = element_text(margin = margin(t = 0, r = 15, b = 0, l = 0), size = 16),
     panel.grid.minor = element_line(color = "grey95"),  # Make minor grid lines lighter
     panel.grid.major = element_line(color = "grey90"),
     plot.caption = element_text(size = 8, color = "grey40"),
     plot.margin = margin(t = 20, r = 20, b = 20, l = 20),
     legend.position = "top",  # Legend at top
-    legend.title = element_text(size = 12),
-    legend.text = element_text(size = 12),
+    legend.title = element_text(size = 16),
+    legend.text = element_text(size = 16),
     # Improve legend spacing and layout
     legend.margin = margin(b = 15), # Add space below the legend
     legend.key.width = unit(2, "cm") # Make the legend keys wider to show line styles better

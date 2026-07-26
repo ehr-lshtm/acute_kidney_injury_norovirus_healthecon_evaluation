@@ -46,101 +46,102 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 
 ##### due to computational burden - code below is run only once and saved to file
 
-# n_iter = 2000
-# 
-# run_and_save_scenario <- function(vaccination_rates, vaccination_effect = 0.6, immunity_waning, scenario_label, filename) {
-#   # Run the scenario (no suffix parameter)
-#   result <- run_vaccination_scenarios(
-#     params = default_parameters(),
-#     vaccination_effect = vaccination_effect,
-#     vaccination_rate = vaccination_rates,
-#     immunity_waning = immunity_waning,
-#     scenario_label = scenario_label,
-#     n_iterations = 2000
-#   )
-# 
-#   # Save to file
-#   write_parquet(result, paste0("data/", filename, ".parquet"))
-# 
-#   # Clean up memory
-#   remove(result)
-#   gc()
-# 
-#   invisible(NULL)
-# }
-# 
-# ##############
-# #### annualise data for mean trajectory
-# ################
-# 
-# calculate_averted_cases <- function(baseline_file, intervention_file, suffix = NULL) {
-#   # Load baseline (no vaccination) data
-#   baseline_data <- process_vaccination_data(baseline_file)
-# 
-#   # Load intervention data - only pass suffix if it's not NULL
-#   if (is.null(suffix)) {
-#     intervention_data <- process_vaccination_data(intervention_file)
-#   } else {
-#     intervention_data <- process_vaccination_data(intervention_file, suffix = suffix)
-#   }
-# 
-#   # Join datasets and calculate averted cases
-#   if (is.null(suffix)) {
-#     # For baseline scenarios (no vaccination), averted cases are 0
-#     result <- baseline_data %>%
-#       mutate(
-#         averted_under5 = 0,
-#         averted_5_14 = 0,
-#         averted_15_64 = 0,
-#         averted_over65 = 0
-#       ) %>%
-#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
-#       group_by(season) %>%
-#       summarize(
-#         averted_under5 = mean(averted_under5, na.rm = TRUE),
-#         averted_5_14 = mean(averted_5_14, na.rm = TRUE),
-#         averted_15_64 = mean(averted_15_64, na.rm = TRUE),
-#         averted_over65 = mean(averted_over65, na.rm = TRUE),
-#         total_under5_vaccinated = mean(total_under5_vaccinated, na.rm = TRUE),
-#         total_5_14_vaccinated = mean(total_5_14_vaccinated, na.rm = TRUE),
-#         total_15_64_vaccinated = mean(total_15_64_vaccinated, na.rm = TRUE),
-#         total_65_plus_vaccinated = mean(total_65_plus_vaccinated, na.rm = TRUE),
-#         .groups = 'drop'
-#       )
-#   } else {
-#     # For intervention scenarios, calculate averted cases
-#     result <- baseline_data %>%
-#       select(season, Iteration, starts_with("total_Is")) %>%
-#       left_join(intervention_data, by = c("season", "Iteration")) %>%
-#       mutate(
-#         averted_under5 = total_Is1 - get(paste0("total_Is1_", suffix)),
-#         averted_5_14 = total_Is2 - get(paste0("total_Is2_", suffix)),
-#         averted_15_64 = total_Is3 - get(paste0("total_Is3_", suffix)),
-#         averted_over65 = total_Is4 - get(paste0("total_Is4_", suffix))
-#       ) %>%
-#       select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
-#       group_by(season) %>%
-#       summarize(
-#         averted_under5 = mean(averted_under5, na.rm = TRUE),
-#         averted_5_14 = mean(averted_5_14, na.rm = TRUE),
-#         averted_15_64 = mean(averted_15_64, na.rm = TRUE),
-#         averted_over65 = mean(averted_over65, na.rm = TRUE),
-#         total_under5_vaccinated = mean(total_under5_vaccinated, na.rm = TRUE),
-#         total_5_14_vaccinated = mean(total_5_14_vaccinated, na.rm = TRUE),
-#         total_15_64_vaccinated = mean(total_15_64_vaccinated, na.rm = TRUE),
-#         total_65_plus_vaccinated = mean(total_65_plus_vaccinated, na.rm = TRUE),
-#         .groups = 'drop'
-#       )
-#   }
-# 
-#   return(result)
-# }
-# 
-# # Calculate immunity waning rates once
-# immunity_6mo <- c(1/(0.5*365), 0)
+n_iter = 2000
+
+run_and_save_scenario <- function(vaccination_rates, vaccination_effect = 0.6, immunity_waning, scenario_label, filename) {
+  # Run the scenario (no suffix parameter)
+  result <- run_vaccination_scenarios(
+    params = default_parameters(),
+    vaccination_effect = vaccination_effect,
+    vaccination_rate = vaccination_rates,
+    immunity_waning = immunity_waning,
+    scenario_label = scenario_label,
+    n_iterations = 2000
+  )
+
+  # Save to file
+  write_parquet(result, paste0("data/", filename, ".parquet"))
+
+  # Clean up memory
+  remove(result)
+  gc()
+
+  invisible(NULL)
+}
+
+##############
+#### annualise data for mean trajectory
+################
+
+calculate_averted_cases <- function(baseline_file, intervention_file, suffix = NULL) {
+  # Load baseline (no vaccination) data
+  baseline_data <- process_vaccination_data(baseline_file)
+
+  # Load intervention data - only pass suffix if it's not NULL
+  if (is.null(suffix)) {
+    intervention_data <- process_vaccination_data(intervention_file)
+  } else {
+    intervention_data <- process_vaccination_data(intervention_file, suffix = suffix)
+  }
+
+  # Join datasets and calculate averted cases
+  if (is.null(suffix)) {
+    # For baseline scenarios (no vaccination), averted cases are 0
+    result <- baseline_data %>%
+      mutate(
+        averted_under5 = 0,
+        averted_5_14 = 0,
+        averted_15_64 = 0,
+        averted_over65 = 0
+      ) %>%
+      select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
+      group_by(season) %>%
+      summarize(
+        averted_under5 = mean(averted_under5, na.rm = TRUE),
+        averted_5_14 = mean(averted_5_14, na.rm = TRUE),
+        averted_15_64 = mean(averted_15_64, na.rm = TRUE),
+        averted_over65 = mean(averted_over65, na.rm = TRUE),
+        total_under5_vaccinated = mean(total_under5_vaccinated, na.rm = TRUE),
+        total_5_14_vaccinated = mean(total_5_14_vaccinated, na.rm = TRUE),
+        total_15_64_vaccinated = mean(total_15_64_vaccinated, na.rm = TRUE),
+        total_65_plus_vaccinated = mean(total_65_plus_vaccinated, na.rm = TRUE),
+        .groups = 'drop'
+      )
+  } else {
+    # For intervention scenarios, calculate averted cases
+    result <- baseline_data %>%
+      select(season, Iteration, starts_with("total_Is")) %>%
+      left_join(intervention_data, by = c("season", "Iteration")) %>%
+      mutate(
+        averted_under5 = total_Is1 - get(paste0("total_Is1_", suffix)),
+        averted_5_14 = total_Is2 - get(paste0("total_Is2_", suffix)),
+        averted_15_64 = total_Is3 - get(paste0("total_Is3_", suffix)),
+        averted_over65 = total_Is4 - get(paste0("total_Is4_", suffix))
+      ) %>%
+      select(season, Iteration, starts_with("averted"), ends_with("vaccinated")) %>%
+      group_by(season) %>%
+      summarize(
+        averted_under5 = mean(averted_under5, na.rm = TRUE),
+        averted_5_14 = mean(averted_5_14, na.rm = TRUE),
+        averted_15_64 = mean(averted_15_64, na.rm = TRUE),
+        averted_over65 = mean(averted_over65, na.rm = TRUE),
+        total_under5_vaccinated = mean(total_under5_vaccinated, na.rm = TRUE),
+        total_5_14_vaccinated = mean(total_5_14_vaccinated, na.rm = TRUE),
+        total_15_64_vaccinated = mean(total_15_64_vaccinated, na.rm = TRUE),
+        total_65_plus_vaccinated = mean(total_65_plus_vaccinated, na.rm = TRUE),
+        .groups = 'drop'
+      )
+  }
+
+  return(result)
+}
+
+# Calculate immunity waning rates once
+immunity_6mo <- c(1/(0.5*365), 0)
 # immunity_9yr <- c(1/(mean(parameter_probabilistic_samples$probabilistic$seasonality_parameters$D_immun)*365), 0)
-# immunity_2yr <- c((1/(2*365)), 0)
-# 
+immunity_9yr <- c(1/(9*365), 0)
+immunity_2yr <- c((1/(2*365)), 0)
+
 # # 6 month immunity scenarios
 # run_and_save_scenario(
 #   vaccination_rates = c(0, 0, 0, 0),
@@ -426,6 +427,6 @@ psa_mean_averted_combo_vaccination <- averted_combo_vaccination |>
 # file.remove("data/mean_no_vaccination_2yr_immunity.parquet")
 # 
 # write_parquet(mean_averted_under5_over65_vaccination_90_VE, "data/mean_averted_under5_over65_vaccination_90_VE.parquet")
-# 
-# # n_iter = 2000
-# 
+
+# n_iter = 2000
+

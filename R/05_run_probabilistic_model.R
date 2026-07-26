@@ -13,6 +13,7 @@ run_vaccination_scenarios <- function(params,
                                       scenario_label = "Default") {
   
   # Set basic parameters
+  params[["aging"]] <- aging
   params[["contacts"]] <- uk_contact_rate_matrix
   params[["vacc_start"]] <- 3535
   
@@ -111,7 +112,7 @@ generate_uncertainty_bounds <- function(data) {
 
 # saveRDS(parameter_probabilistic_samples, "data/parameter_probabilistic_samples_list.rds")
 # parameter_probabilistic_samples <- readRDS("data/parameter_probabilistic_samples_list.rds")
-# 
+
 # no_vaccination <- run_vaccination_scenarios(
 #   params = default_parameters(),
 #   vaccination_effect = 0.5,

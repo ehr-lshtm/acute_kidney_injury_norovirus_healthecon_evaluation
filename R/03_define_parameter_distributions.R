@@ -1,6 +1,7 @@
 #### load trace
 
-traceBurnThin_df <- fread("docs/trace/traceBurnThin_df.txt")
+# traceBurnThin_df <- fread("docs/trace/traceBurnThin_df.txt")
+traceBurnThin_df <- fread("docs/trace/traceBurnThin_df_16112025.txt")
 
 ########
 

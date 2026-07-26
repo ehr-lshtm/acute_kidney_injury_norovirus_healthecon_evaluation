@@ -72,7 +72,7 @@ source("R/03_define_parameter_distributions.R")
 source("R/04_sample_parameter_distributions.R")
 
 # saveRDS(parameter_probabilistic_samples, "results/parameter_probabilistic_samples.rds")
-# parameter_probabilistic_samples <- readRDS("results/parameter_probabilistic_samples.rds")
+parameter_probabilistic_samples <- readRDS("results/parameter_probabilistic_samples.rds")
 
 par(mfrow = c(3, 3))
 for (param in names(parameter_probabilistic_samples$probabilistic$seasonality_parameters)) {

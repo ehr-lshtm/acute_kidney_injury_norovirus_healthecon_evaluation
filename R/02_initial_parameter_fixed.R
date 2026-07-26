@@ -76,8 +76,18 @@ demography <- UK_structure$demography$population
 
 uk_contact_rate_matrix <- t(t(uk_contact_rate_matrix) / demography)
 
+# aging
+ages <- c(5, 15, 65, 81)
+da <- diff(c(0, ages))
+length(ages)
+aging <- diag(-1 / da)
+aging[row(aging) - col(aging) == 1] <- 1 / utils::head(da, -1)
+aging <- aging / 365
+# No ageing in last group - flow out via mortality rate
+
 # add contact matrix to pop
 params <- default_parameters()
+params[["aging"]] <- aging
 params[["contacts"]] <- uk_contact_rate_matrix
 params[["season_offset"]] <- rep(0.5, length(params[["season_offset"]]))
 #params[["vacc_start"]] <- 3535
